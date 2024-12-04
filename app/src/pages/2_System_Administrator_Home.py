@@ -22,7 +22,7 @@ if st.button('Manage Inactive Users',
 if st.button('View User Activity', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/User_Activity_Page.py')
+  st.switch_page('pages/Users_Activity_Page.py')
 
 if st.button("View Reports",
              type='primary',

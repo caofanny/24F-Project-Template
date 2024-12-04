@@ -22,7 +22,7 @@ if st.button('View Mentors',
 if st.button('View Courses', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/Courses_Page.py')
+  st.switch_page('pages/Student_Courses_Page.py')
 
 if st.button('View Profile',
              type='primary',
