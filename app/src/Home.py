@@ -42,42 +42,43 @@ st.write('### HI! As which user would you like to log in?')
 # functionality, we put a button on the screen that the user 
 # can click to MIMIC logging in as that mock user. 
 
-if st.button("Act as Alex, a Student", 
+if st.button("Act as Alex Kim, a Student", 
             type = 'primary', 
             use_container_width=True):
     # when user clicks the button, they are now considered authenticated
     st.session_state['authenticated'] = True
     # we set the role of the current user
-    st.session_state['role'] =  'student' #'pol_strat_advisor'
+    st.session_state['role'] =  'student' #'student'
     # we add the first name of the user (so it can be displayed on 
     # subsequent pages). 
     st.session_state['first_name'] = 'Alex'
     # finally, we ask streamlit to switch to another page, in this case, the 
     # landing page for this particular user type
     logger.info("Logging in as Student")
-    st.switch_page('pages/50_student_Home.py')
+    st.switch_page('pages/1_Student_Home.py')
 
-if st.button('Act as Mohammad, an USAID worker', 
+if st.button('Act as Natalie Chen, a Mentor', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
-    st.session_state['first_name'] = 'Mohammad'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.session_state['role'] = 'mentor'
+    st.session_state['first_name'] = 'Natalie'
+    st.switch_page('pages/3_Mentor_Home.py')
 
-if st.button('Act as System Administrator', 
+if st.button('Act as Jackie Torres, an Advisor', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'administrator'
-    st.session_state['first_name'] = 'SysAdmin'
-    st.switch_page('pages/20_Admin_Home.py')
+    st.session_state['role'] = 'advisor'
+    st.session_state['first_name'] = 'Jackie'
+    st.switch_page('pages/4_Advisor_Home.py')
 
-if st.button('Some Text On the Button',
-             type = 'primary',
-             use_container_width=True):
-        st.session_state['authenticated'] = True
-        st.session_state['role'] = 'Professor'
-        st.switch_page('pages/20_Admin_Home.py')
+if st.button('Act as Sarah Walker, a System Administrator', 
+            type = 'primary', 
+            use_container_width=True):
+    st.session_state['authenticated'] = True
+    st.session_state['role'] = 'system_admin'
+    st.session_state['first_name'] = 'Sarah'
+    st.switch_page('pages/2_System_Administrator_Home.py')
 
 
