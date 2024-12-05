@@ -751,3 +751,34 @@ INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminI
 INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (117,'Berne','Fitzroy','bfitzroyq@wix.com',1,'2024-08-01',127);
 INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (118,'Harlie','Porcher','hporcherr@github.io',0,'2024-11-22',665);
 
+-- ADDING Reports Mock Data
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (30,988,'resolved','Violating user guidelines',351);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (12,550,'pending','Inappropriate content',406);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (105,557,'resolved','Violating user guidelines',870);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (114,550,'pending','Violating user guidelines',337);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (24,773,'pending','Spam behavior',969);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (64,437,'pending','Inappropriate content',488); #MADE ANSWEREDBY 437
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (108,437,'pending','Offensive language',657); #MADE ANSWEREDBY 437
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (54,562,'pending','Inappropriate content',347);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (1,437,'resolved','Spam behavior',672);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (90,946,'pending','Inappropriate content',325);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (118,482,'pending','Offensive language',342);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (46,549,'pending','Offensive language',127);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (79,458,'resolved','Spam behavior',205);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (114,809,'resolved','Inappropriate content',323);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (81,665,'pending','Violating user guidelines',317);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (85,735,'pending','Offensive language',472);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (26,566,'pending','Violating user guidelines',252);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (43,809,'pending','Inappropriate content',929);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (4,482,'pending','Offensive language',950);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (2,988,'resolved','Violating user guidelines',648);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (97,463,'pending','Inappropriate content',469);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (7,727,'pending','Spam behavior',368);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (111,680,'resolved','Violating user guidelines',424);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (26,735,'resolved','Offensive language',195);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (61,524,'pending','Violating user guidelines',315);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (30,479,'resolved','Inappropriate content',263);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (90,809,'resolved','Offensive language',101);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (48,946,'resolved','Spam behavior',984);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (89,988,'resolved','Inappropriate content',504);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (113,458,'resolved','Spam behavior',487);
