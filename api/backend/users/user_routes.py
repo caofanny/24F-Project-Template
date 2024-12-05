@@ -25,12 +25,12 @@ def get_users():
     cursor = db.get_db().cursor()
     # Join Users with Students, Alumni, and Advisors to get LastLogin for each user
     query = '''
-    SELECT u.UserID, u.FirstName, u.LastName, u.Email,
-           COALESCE(s.LastLogin, a.LastLogin, adv.LastLogin) AS LastLogin
-    FROM User u
-    LEFT JOIN Student s ON u.UserID = s.UserID
-    LEFT JOIN Alumnus a ON u.UserID = a.UserID
-    LEFT JOIN Advisor adv ON u.UserID = adv.UserID
+        SELECT u.UserID, u.FirstName, u.LastName, u.Email,
+            COALESCE(s.LastLogin, a.LastLogin, adv.LastLogin) AS LastLogin
+        FROM User u
+            LEFT JOIN Student s ON u.UserID = s.UserID
+            LEFT JOIN Alumnus a ON u.UserID = a.UserID
+            LEFT JOIN Advisor adv ON u.UserID = adv.UserID
     '''
 
     cursor.execute(query)
@@ -125,14 +125,14 @@ def get_performance():
 
     # Query to select users who have logged in within the last 30 minutes
     query = """
-    SELECT u.UserID, u.FirstName, u.LastName, u.Email
-    FROM User u
-    LEFT JOIN Student s ON u.UserID = s.UserID
-    LEFT JOIN Alumnus a ON u.UserID = a.UserID
-    LEFT JOIN Advisor ad ON u.UserID = ad.UserID
-    LEFT JOIN Admin ad2 ON u.UserID = ad2.UserID
-    WHERE (s.lastlogin >= %s OR a.lastlogin >= %s OR ad.lastlogin >= %s OR ad2.lastlogin >= %s)
-    """
+        SELECT u.UserID, u.FirstName, u.LastName, u.Email
+        FROM User u
+            LEFT JOIN Student s ON u.UserID = s.UserID
+            LEFT JOIN Alumnus a ON u.UserID = a.UserID
+            LEFT JOIN Advisor ad ON u.UserID = ad.UserID
+            LEFT JOIN User_Admin ad2 ON u.UserID = ad2.UserID
+        WHERE (s.lastlogin >= %s OR a.lastlogin >= %s OR ad.lastlogin >= %s OR ad2.lastlogin >= %s)
+        """
 
     # Execute the query with the time threshold
     cursor.execute(query, (time_threshold, time_threshold, time_threshold, time_threshold))
