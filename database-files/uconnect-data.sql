@@ -717,3 +717,99 @@ INSERT INTO Comments_Made(PostID,CommentID) VALUES (448,2656);
 INSERT INTO Comments_Made(PostID,CommentID) VALUES (645,9358);
 INSERT INTO Comments_Made(PostID,CommentID) VALUES (744,7934);
 
+
+
+-- INSERTING MOCK DATA FOR User_Admin
+
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (91,'Aymer','Ferrolli','aferrolli0@wikimedia.org',0,'2024-06-17',566);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (92,'Engelbert','Mockler','emockler1@usa.gov',1,'2024-10-15',349);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (93,'Leopold','Lorraway','llorraway2@cmu.edu',1,'2024-02-24',479);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (94,'Catie','Gothard','cgothard3@loc.gov',1,'2024-10-27',727);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (95,'Sheffy','Kemmet','skemmet4@yahoo.com',0,'2024-12-01',557);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (96,'Rene','Manford','rmanford5@vinaora.com',1,'2024-11-22',562);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (97,'Rowland','Bagnold','rbagnold6@boston.com',1,'2024-05-05',549);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (99,'Isabelita','Dilleway','idilleway7@surveymonkey.com',0,'2024-07-04',384);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (99,'Quinn','O'' Kelleher','qokelleher8@canalblog.com',1,'2024-10-11',550);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (100,'Rozamond','Crock','rcrock9@indiegogo.com',1,'2024-04-26',877);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (101,'Sky','McRitchie','smcritchiea@arizona.edu',0,'2024-04-02',773);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (102,'Heall','Nuschke','hnuschkeb@gmpg.org',1,'2024-06-26',680);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (103,'Noami','Filimore','nfilimorec@xing.com',1,'2024-07-28',437);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (104,'Ingunna','Farady','ifaradyd@feedburner.com',1,'2024-07-18',946);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (105,'Lynsey','Corten','lcortene@youtube.com',0,'2024-02-04',988);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (106,'Sarina','Cerie','scerief@liveinternet.ru',0,'2024-12-02',463);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (107,'Chip','Dabney','cdabneyg@businessweek.com',0,'2024-08-10',107);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (108,'Carlota','Freyne','cfreyneh@aol.com',0,'2024-07-11',735);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (109,'Marget','Sexty','msextyi@g.co',0,'2024-05-05',226);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (110,'Gerek','Salterne','gsalternej@narod.ru',1,'2024-01-26',196);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (111,'Davy','Yakolev','dyakolevk@craigslist.org',0,'2024-07-07',482);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (112,'Moll','Balsillie','mbalsilliel@sciencedirect.com',0,'2024-11-19',524);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (113,'Jacquenetta','Gatus','jgatusm@ebay.co.uk',0,'2024-02-04',458);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (114,'Drusilla','Coyle','dcoylen@t.co',0,'2024-08-22',809);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (115,'Rufus','Biset','rbiseto@yolasite.com',0,'2024-05-27',382);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (116,'Stephani','Gorst','sgorstp@cpanel.net',0,'2024-06-18',483); #SWITCHED HERE 482 TO 483
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (117,'Berne','Fitzroy','bfitzroyq@wix.com',1,'2024-08-01',127);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (118,'Harlie','Porcher','hporcherr@github.io',0,'2024-11-22',665);
+
+-- ADDING Reports Mock Data
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (30,988,'resolved','Violating user guidelines',351);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (12,550,'pending','Inappropriate content',406);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (105,557,'resolved','Violating user guidelines',870);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (114,550,'pending','Violating user guidelines',337);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (24,773,'pending','Spam behavior',969);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (64,437,'pending','Inappropriate content',488);--#MADE ANSWEREDBY 437
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (108,437,'pending','Offensive language',657);   --#MADE ANSWEREDBY 437
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (54,562,'pending','Inappropriate content',347);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (1,437,'resolved','Spam behavior',672);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (90,946,'pending','Inappropriate content',325);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (118,482,'pending','Offensive language',342);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (46,549,'pending','Offensive language',127);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (79,458,'resolved','Spam behavior',205);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (114,809,'resolved','Inappropriate content',323);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (81,665,'pending','Violating user guidelines',317);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (85,735,'pending','Offensive language',472);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (26,566,'pending','Violating user guidelines',252);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (43,809,'pending','Inappropriate content',929);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (4,482,'pending','Offensive language',950);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (2,988,'resolved','Violating user guidelines',648);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (97,463,'pending','Inappropriate content',469);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (7,727,'pending','Spam behavior',368);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (111,680,'resolved','Violating user guidelines',424);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (26,735,'resolved','Offensive language',195);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (61,524,'pending','Violating user guidelines',315);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (30,479,'resolved','Inappropriate content',263);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (90,809,'resolved','Offensive language',101);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (48,946,'resolved','Spam behavior',984);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (89,988,'resolved','Inappropriate content',504);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (113,458,'resolved','Spam behavior',487);
+
+-- INSERTING INTO Reports_Made
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (30,351);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (12,406);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (105,870);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (114,337);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (24,969);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (64,488);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (108,657);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (54,347);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (1,672);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (90,325);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (118,342);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (46,127);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (79,205);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (114,323);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (81,317);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (85,472);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (26,252);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (43,929);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (4,950);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (2,648);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (97,469);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (7,368);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (111,424);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (26,195);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (61,315);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (30,263);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (90,101);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (48,984);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (89,504);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (113,487);
