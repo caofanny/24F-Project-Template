@@ -62,7 +62,7 @@ def get_course_reviews(course_name):
 
     cursor = db.get_db().cursor()
     query = '''
-        SELECT r.Title AS Review_Title, r.Rating, r.Content
+        SELECT r.Name AS Username, r.Title AS Review_Title, r.Rating, r.Content
         FROM Reviews_Made rm 
             JOIN Review r ON rm.ReviewID = r.ReviewID 
             JOIN Courses c ON rm.CoursesID = c.CoursesID 
@@ -81,58 +81,63 @@ def get_course_reviews(course_name):
 #------------------------------------------------------------
 # Add a new review for the specific course
 @courses.route('/courses/<couse-name>/review/', methods=['POST'])
-def get_course_reviews(course_name):
+def add_course_reviews(course_name):
+
+    data = request.get_json()
+    name = data.get('name')
+    author_id = data.get('AuthorID')
+    title = data.get('Title')   
+    rating = data.get('Rating')  
+    content = data.get('Content')  
 
     cursor = db.get_db().cursor()
-    query = '''
-        SELECT r.Title AS Review_Title, r.Rating, r.Content
-        FROM Reviews_Made rm 
-            JOIN Review r ON rm.ReviewID = r.ReviewID 
-            JOIN Courses c ON rm.CoursesID = c.CoursesID 
-        WHERE c.Name = %s
-        ORDER BY r.Rating DESC;
 
+    review_query = '''
+        INSERT INTO Review (Name, AuthorID, Title, Rating, Content)
+        VALUES (%s, %s, %s, %s, %s)
     '''
-    cursor.execute(query, course_name)
-    
-    theData = cursor.fetchall()
-    
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
+
+    cursor.execute(review_query, (name, author_id, title, rating, content))
+    db.get_db().commit()
+    return 'review created!'
 
 #------------------------------------------------------------
-# Update a review for a specific course
-@courses.route('/courses/<couse-name>/review/<review-id>', methods=['PUT'])
-def make_report():
+# Update a review for a course
+@courses.route('/courses/review/<review-id>', methods=['PUT'])
+def update_course_review(review_id):
 
-    reported_by = request.json.get('ReportedBy')  # UserID of the person reporting
-    reason = request.json.get('Reason')          # Reason for the report
-    status = request.json.get('Status')          # Status of the report
-    report_date = datetime.now()                 # Date and time of the report (current time)
+    current_app.logger.info(f'PUT /courses/review/{review_id} route')
 
-    # Insert the report into the Reports table
+    data = request.get_json()
+    title = data.get('Title')
+    rating = data.get('Rating')
+    content = data.get('Content')
+
+    current_app.logger.info(f'Received data: title={title}, 
+                            rating={rating}, content={content}')
+    
     cursor = db.get_db().cursor()
     query = '''
-        INSERT INTO Reports (UserReported, AnsweredBy, Status, Reason, ReportDate)
-        VALUES (%s, NULL, %s, %s, %s)
+        UPDATE Review
+        SET Title = %s, Rating = %s, Content = %s
+        WHERE ReviewID = %s
     '''
-    cursor.execute(query, (reported_by, status, reason, report_date))
+    cursor.execute(query, (title, rating, content, review_id))
     db.get_db().commit()
     
-    return 'report created!'
+    return 'review updated!'
 
 #------------------------------------------------------------
-# Delete the report
-@reports.route('/courses/<couse-name>/review/<review-id>', methods=['DELETE'])
-def delete_report(report_id):
+# Delete the review
+@courses.route('/courses/review/<review-id>', methods=['DELETE'])
+def delete_report(review_id):
 
     cursor = db.get_db().cursor()
     query = '''
-        DELETE FROM Reports
-        WHERE ReportID = %s;
+        DELETE FROM Review
+        WHERE ReviewID = %s;
     '''
-    cursor.execute(query, (report_id,))
+    cursor.execute(query, (review_id,))
     db.get_db().commit()
     
-    return 'report deleted!'
+    return 'review deleted!'
