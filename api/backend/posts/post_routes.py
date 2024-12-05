@@ -14,21 +14,20 @@ from backend.ml_models.model01 import predict
 #------------------------------------------------------------
 # Create a new Blueprint object, which is a collection of 
 # routes.
-reports = Blueprint('reports', __name__)
+posts = Blueprint('post', __name__)
 
 
 #------------------------------------------------------------
-# Return a list of reports
-@reports.route('/reports', methods=['GET'])
-def get_reports():
+# Return a list of post
+@posts.route('/post', methods=['GET'])
+def get_post():
 
     cursor = db.get_db().cursor()
     query = '''
-        SELECT u.FirstName AS UserReported, a.FirstName AS AnsweredBy, 
-               r.Reason, r.Status, r.ReportDate
-        FROM Reports r
-            JOIN User_Admin a ON r.AnsweredBy = a.AdminID
-            JOIN User u ON r.UserReported = u.UserID
+       SELECT p.PostID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName, 
+               p.Title, p.Slug, p.Content, p.CreatedAt, p.UpdatedAt, p.PublishedAt
+        FROM Post p
+        JOIN User u ON p.AuthorID = u.UserID
     '''
     cursor.execute(query)
     
@@ -39,77 +38,66 @@ def get_reports():
     return the_response
 
 #------------------------------------------------------------
-# Create a report
-@reports.route('/reports', methods=['POST'])
-def make_report():
+# Create a post
+@posts.route('/post', methods=['POST'])
+def make_post():
 
-    reported_by = request.json.get('ReportedBy')  # UserID of the person reporting
-    reason = request.json.get('Reason')          # Reason for the report
-    status = request.json.get('Status')          # Status of the report
-    report_date = datetime.now()                 # Date and time of the report (current time)
+    data = request.json
+    author_id = data.get('AuthorID')
+    title = data.get('Title')
+    slug = data.get('Slug')
+    content = data.get('Content')
+    published_at = data.get('PublishedAt')
 
-    # Insert the report into the Reports table
     cursor = db.get_db().cursor()
     query = '''
-        INSERT INTO Reports (UserReported, AnsweredBy, Status, Reason, ReportDate)
-        VALUES (%s, NULL, %s, %s, %s)
+        INSERT INTO Post (AuthorID, Title, Slug, Content, PublishedAt)
+        VALUES (%s, %s, %s, %s, %s)
     '''
-    cursor.execute(query, (reported_by, status, reason, report_date))
+    cursor.execute(query, (author_id, title, slug, content, published_at))
     db.get_db().commit()
-    
-    return 'report created!'
 
-#------------------------------------------------------------
-# Return the specific report
-@reports.route('/reports/{report-id}', methods=['GET'])
-def get_specific_report(report_id):
+    return make_response(jsonify({"message": "Post created successfully"}), 201)
 
-    cursor = db.get_db().cursor()
-    
-    # Query to fetch the specific report by report_id
-    query = '''
-        SELECT u.FirstName AS UserReported, a.FirstName AS AnsweredBy, r.Reason, r.Status, r.ReportDate
-        FROM Reports r
-        JOIN User_Admin a ON r.AnsweredBy = a.AdminID
-        JOIN User u ON r.UserReported = u.UserID
-        WHERE r.ReportID = %s;
-    '''
-    cursor.execute(query, report_id)
-    theData = cursor.fetchall()
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
+
 
 #------------------------------------------------------------
 # Update the status of the reports made
-@reports.route('/reports/{report-id}', methods=['PUT'])
-def answer_report(report_id):
+@reports.route('/post/{post-id}', methods=['PUT'])
+def answer_report(post_id):
 
-    answered_by = request.json.get('AnsweredBy')  # Admin/user ID handling the report
-    status = request.json.get('Status') 
+    data = request.json
+    title = data.get('Title')
+    slug = data.get('Slug')
+    content = data.get('Content')
+    published_at = data.get('PublishedAt')
+
     cursor = db.get_db().cursor()
     query = '''
-        UPDATE Reports
-        SET AnsweredBy = %s, Status = %s
-        WHERE ReportID = %s
+        UPDATE Post
+        SET Title = %s, Slug = %s, Content = %s, PublishedAt = %s, UpdatedAt = CURRENT_TIMESTAMP
+        WHERE PostID = %s
     '''
-
-    cursor.execute(query, (answered_by, status, report_id))
+    cursor.execute(query, (title, slug, content, published_at, post_id))
     db.get_db().commit()
 
-    return 'report answered!'
+    if cursor.rowcount > 0:
+        return make_response(jsonify({"message": "Post updated successfully"}), 200)
+    else:
+        return make_response(jsonify({"error": "Post not found"}), 404)
 
 #------------------------------------------------------------
-# Delete the report
-@reports.route('/reports/{report-id}', methods=['DELETE'])
-def delete_report(report_id):
-
+# Delete the post
+@posts.route('/posts/<int:post_id>', methods=['DELETE'])
+def delete_post(post_id):
     cursor = db.get_db().cursor()
     query = '''
-        DELETE FROM Reports
-        WHERE ReportID = %s;
+        DELETE FROM Post
+        WHERE PostID = %s
     '''
-    cursor.execute(query, (report_id,))
+    cursor.execute(query, (post_id,))
     db.get_db().commit()
+
     
-    return 'report deleted!'
+    return 'report created!'
+    
