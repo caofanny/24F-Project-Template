@@ -757,8 +757,8 @@ INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (12,5
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (105,557,'resolved','Violating user guidelines',870);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (114,550,'pending','Violating user guidelines',337);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (24,773,'pending','Spam behavior',969);
-INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (64,437,'pending','Inappropriate content',488); #MADE ANSWEREDBY 437
-INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (108,437,'pending','Offensive language',657); #MADE ANSWEREDBY 437
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (64,437,'pending','Inappropriate content',488);--#MADE ANSWEREDBY 437
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (108,437,'pending','Offensive language',657);   --#MADE ANSWEREDBY 437
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (54,562,'pending','Inappropriate content',347);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (1,437,'resolved','Spam behavior',672);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (90,946,'pending','Inappropriate content',325);
@@ -782,3 +782,35 @@ INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (90,8
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (48,946,'resolved','Spam behavior',984);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (89,988,'resolved','Inappropriate content',504);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (113,458,'resolved','Spam behavior',487);
+
+-- INSERTING INTO Reports_Made
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (30,351);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (12,406);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (105,870);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (114,337);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (24,969);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (64,488);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (108,657);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (54,347);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (1,672);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (90,325);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (118,342);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (46,127);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (79,205);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (114,323);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (81,317);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (85,472);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (26,252);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (43,929);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (4,950);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (2,648);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (97,469);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (7,368);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (111,424);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (26,195);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (61,315);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (30,263);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (90,101);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (48,984);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (89,504);
+INSERT INTO Reports_Made(UserID,ReportID) VALUES (113,487);
