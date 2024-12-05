@@ -286,3 +286,48 @@ def get_students_company(company_name):
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
+
+#------------------------------------------------------------
+# Returns a list of students and their coop status
+@users.route('/users/advisor/students/', methods=['GET'])
+def get_students_coop():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, Major, Year, CoopStatus
+        FROM Student;
+    '''
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Returns the coop placement rate for students
+@users.route('/users/advisor/students/coop', methods=['GET'])
+def get_students_coop_rate():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT 
+            COUNT(*) AS total_students,
+            SUM(CASE WHEN CoopStatus = 'Placed' THEN 1 ELSE 0 END) AS students_with_coop,
+            SUM(CASE WHEN CoopStatus = 'Searching' THEN 1 ELSE 0 END) AS students_still_searching,
+            ROUND(SUM(CASE WHEN CoopStatus = 'Placed' THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) AS coop_percentage
+        FROM Student;
+    '''
+    cursor.execute(query)
+    theData = cursor.fetchone()  # Use fetchone because you expect a single result with aggregated values
+    
+    # Format the result
+    result = {
+        "total_students": theData[0],
+        "students_with_coop": theData[1],
+        "students_still_searching": theData[2],
+        "coop_percentage": theData[3]
+    }
+
+    the_response = make_response(jsonify(result))
+    the_response.status_code = 200
+    return the_response
