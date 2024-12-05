@@ -718,3 +718,6 @@ INSERT INTO Comments_Made(PostID,CommentID) VALUES (448,2656);
 INSERT INTO Comments_Made(PostID,CommentID) VALUES (645,9358);
 INSERT INTO Comments_Made(PostID,CommentID) VALUES (744,7934);
 
+-- INSERTING MOCK DATA INTO Comments_Made
+INSERT INTO 
+
