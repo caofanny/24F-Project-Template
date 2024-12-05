@@ -27,10 +27,10 @@ def get_users():
     query = '''
     SELECT u.UserID, u.FirstName, u.LastName, u.Email,
            COALESCE(s.LastLogin, a.LastLogin, adv.LastLogin) AS LastLogin
-    FROM Users u
-    LEFT JOIN Students s ON u.UserID = s.UserID
-    LEFT JOIN Alumni a ON u.UserID = a.UserID
-    LEFT JOIN Advisors adv ON u.UserID = adv.UserID
+    FROM User u
+    LEFT JOIN Student s ON u.UserID = s.UserID
+    LEFT JOIN Alumnus a ON u.UserID = a.UserID
+    LEFT JOIN Advisor adv ON u.UserID = adv.UserID
     '''
 
     cursor.execute(query)
@@ -87,7 +87,7 @@ def update_user(uid):
     
     # Use the extracted data in your SQL query or application logic
     query = '''
-        UPDATE Users
+        UPDATE User
         SET FirstName = %s, LastName = %s, Email = %s
         WHERE UserID = %s
     '''
@@ -105,7 +105,7 @@ def delete_user(uid):
     cursor = db.get_db().cursor()
 
     # Delete the user directly from the Users table
-    query = "DELETE FROM Users WHERE UserID = %s"
+    query = "DELETE FROM User WHERE UserID = %s"
     cursor.execute(query, (uid,))
     db.get_db().commit()
 
@@ -126,11 +126,11 @@ def get_performance():
     # Query to select users who have logged in within the last 30 minutes
     query = """
     SELECT u.UserID, u.FirstName, u.LastName, u.Email
-    FROM Users u
-    LEFT JOIN student s ON u.UserID = s.UserID
-    LEFT JOIN alumni a ON u.UserID = a.UserID
-    LEFT JOIN advisor ad ON u.UserID = ad.UserID
-    LEFT JOIN admin ad2 ON u.UserID = ad2.UserID
+    FROM User u
+    LEFT JOIN Student s ON u.UserID = s.UserID
+    LEFT JOIN Alumnus a ON u.UserID = a.UserID
+    LEFT JOIN Advisor ad ON u.UserID = ad.UserID
+    LEFT JOIN Admin ad2 ON u.UserID = ad2.UserID
     WHERE (s.lastlogin >= %s OR a.lastlogin >= %s OR ad.lastlogin >= %s OR ad2.lastlogin >= %s)
     """
 
@@ -171,10 +171,10 @@ def get_user_status():
 @users.route('/users/students-status', methods=['GET'])
 def get_student_status():
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT COUNT(*) FROM Students WHERE isActive = 1''')  # Active students
+    cursor.execute('''SELECT COUNT(*) FROM Student WHERE isActive = 1''')  # Active students
     active_students = cursor.fetchone()[0]
     
-    cursor.execute('''SELECT COUNT(*) FROM Students WHERE isActive = 0''')  # Inactive students
+    cursor.execute('''SELECT COUNT(*) FROM Student WHERE isActive = 0''')  # Inactive students
     inactive_students = cursor.fetchone()[0]
     
     total_students = active_students + inactive_students
@@ -192,10 +192,10 @@ def get_student_status():
 @users.route('/users/alumni-status', methods=['GET'])
 def get_alumni_status():
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT COUNT(*) FROM Alumni WHERE isActive = 1''')  # Active alumni
+    cursor.execute('''SELECT COUNT(*) FROM Alumnus WHERE isActive = 1''')  # Active alumni
     active_alumni = cursor.fetchone()[0]
     
-    cursor.execute('''SELECT COUNT(*) FROM Alumni WHERE isActive = 0''')  # Inactive alumni
+    cursor.execute('''SELECT COUNT(*) FROM Alumnus WHERE isActive = 0''')  # Inactive alumni
     inactive_alumni = cursor.fetchone()[0]
     
     total_alumni = active_alumni + inactive_alumni
@@ -213,10 +213,10 @@ def get_alumni_status():
 @users.route('/users/advisors-status', methods=['GET'])
 def get_advisor_status():
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT COUNT(*) FROM Advisors WHERE isActive = 1''')  # Active advisors
+    cursor.execute('''SELECT COUNT(*) FROM Advisor WHERE isActive = 1''')  # Active advisors
     active_advisors = cursor.fetchone()[0]
     
-    cursor.execute('''SELECT COUNT(*) FROM Advisors WHERE isActive = 0''')  # Inactive advisors
+    cursor.execute('''SELECT COUNT(*) FROM Advisor WHERE isActive = 0''')  # Inactive advisors
     inactive_advisors = cursor.fetchone()[0]
     
     total_advisors = active_advisors + inactive_advisors
@@ -237,10 +237,51 @@ def get_students():
     cursor = db.get_db().cursor()
 
     query = '''
-        SELECT * FROM Students;
+        SELECT FirstName, LastName, Email, Major, Year
+        FROM Student;
     '''
 
     cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Return a list of all students who took the specific course
+@users.route('/users/students/<course_name>', methods=['GET'])
+def get_students_courses(course_name):
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT u.FirstName, u.LastName, u.Email 
+        FROM USER u
+	        JOIN Courses_Taken ct ON ct.UserID = u.UserID
+	        JOIN Courses c ON ct.CourseID = c.CourseID
+        WHERE c.Name = %s;
+    '''
+    data = (course_name,)
+    cursor.execute(query, data)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Return a list of all students who worked at a specific company
+@users.route('/users/students/<company_name>', methods=['GET'])
+def get_students_company(company_name):
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT u.FirstName, u.LastName, u.Email 
+        FROM USER u
+	        JOIN Company_Worked cw ON cw.UserID = u.UserID
+	        JOIN Company c ON c.CompanyID = cw.CompanyId
+        WHERE c.Name = %s;
+    '''
+    data = (company_name,)
+    cursor.execute(query, data)
     theData = cursor.fetchall()
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
