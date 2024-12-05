@@ -1,41 +1,49 @@
 import logging
-logger = logging.getLogger(__name__)
-import pandas as pd
 import streamlit as st
+import requests
 from streamlit_extras.app_logo import add_logo
-import world_bank_data as wb
-import matplotlib.pyplot as plt
-import numpy as np
-import plotly.express as px
 from modules.nav import SideBarLinks
+
+# Set up logger
+logger = logging.getLogger(__name__)
 
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
-# set the header of the page
-st.header('World Bank Data')
+# Set the header of the page
+st.write("# Accessing Users Data from the API")
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+"""
+This page retrieves data about users from a REST API running in a separate backend. 
+If the backend is not accessible, dummy data will be used to display.
+"""
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+# Default empty data
+users_data = {}
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
+# Try to fetch data from the backend API
+try:
+    # Replace with your backend URL
+    backend_url = "http://api:4000/p/products"  # Change to the actual backend URL
+    response = requests.get(f"{backend_url}/users")
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        users_data = response.json()  # Parse the JSON response into a dictionary
+    else:
+        st.warning(f"Failed to fetch data. Status code: {response.status_code}")
+except requests.exceptions.RequestException as e:
+    st.write("**Important**: Could not connect to the API, so using dummy data.")
+    # Fallback to dummy data if the API request fails
+    users_data = [
+        {"UserID": 1, "FirstName": "John", "LastName": "Doe", "Email": "john.doe@example.com", "Status": "Active"},
+        {"UserID": 2, "FirstName": "Jane", "LastName": "Smith", "Email": "jane.smith@example.com", "Status": "Inactive"},
+        {"UserID": 3, "FirstName": "Tom", "LastName": "Brown", "Email": "tom.brown@example.com", "Status": "Active"},
+    ]
 
-    st.pyplot(test_plot)
-
-
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+# Display the users data as a table
+st.subheader("Users List")
+if isinstance(users_data, list):  # Checking if data is in list format
+    st.dataframe(users_data)  # Display data as a table
+else:
+    st.write("No user data to display.")
