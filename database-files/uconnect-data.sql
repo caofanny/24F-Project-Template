@@ -718,6 +718,36 @@ INSERT INTO Comments_Made(PostID,CommentID) VALUES (448,2656);
 INSERT INTO Comments_Made(PostID,CommentID) VALUES (645,9358);
 INSERT INTO Comments_Made(PostID,CommentID) VALUES (744,7934);
 
--- INSERTING MOCK DATA INTO Comments_Made
-INSERT INTO 
+
+
+-- INSERTING MOCK DATA FOR User_Admin
+
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (91,'Aymer','Ferrolli','aferrolli0@wikimedia.org',0,'2024-06-17',566);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (92,'Engelbert','Mockler','emockler1@usa.gov',1,'2024-10-15',349);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (93,'Leopold','Lorraway','llorraway2@cmu.edu',1,'2024-02-24',479);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (94,'Catie','Gothard','cgothard3@loc.gov',1,'2024-10-27',727);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (95,'Sheffy','Kemmet','skemmet4@yahoo.com',0,'2024-12-01',557);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (96,'Rene','Manford','rmanford5@vinaora.com',1,'2024-11-22',562);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (97,'Rowland','Bagnold','rbagnold6@boston.com',1,'2024-05-05',549);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (99,'Isabelita','Dilleway','idilleway7@surveymonkey.com',0,'2024-07-04',384);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (99,'Quinn','O'' Kelleher','qokelleher8@canalblog.com',1,'2024-10-11',550);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (100,'Rozamond','Crock','rcrock9@indiegogo.com',1,'2024-04-26',877);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (101,'Sky','McRitchie','smcritchiea@arizona.edu',0,'2024-04-02',773);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (102,'Heall','Nuschke','hnuschkeb@gmpg.org',1,'2024-06-26',680);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (103,'Noami','Filimore','nfilimorec@xing.com',1,'2024-07-28',437);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (104,'Ingunna','Farady','ifaradyd@feedburner.com',1,'2024-07-18',946);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (105,'Lynsey','Corten','lcortene@youtube.com',0,'2024-02-04',988);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (106,'Sarina','Cerie','scerief@liveinternet.ru',0,'2024-12-02',463);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (107,'Chip','Dabney','cdabneyg@businessweek.com',0,'2024-08-10',107);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (108,'Carlota','Freyne','cfreyneh@aol.com',0,'2024-07-11',735);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (109,'Marget','Sexty','msextyi@g.co',0,'2024-05-05',226);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (110,'Gerek','Salterne','gsalternej@narod.ru',1,'2024-01-26',196);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (111,'Davy','Yakolev','dyakolevk@craigslist.org',0,'2024-07-07',482);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (112,'Moll','Balsillie','mbalsilliel@sciencedirect.com',0,'2024-11-19',524);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (113,'Jacquenetta','Gatus','jgatusm@ebay.co.uk',0,'2024-02-04',458);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (114,'Drusilla','Coyle','dcoylen@t.co',0,'2024-08-22',809);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (115,'Rufus','Biset','rbiseto@yolasite.com',0,'2024-05-27',382);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (116,'Stephani','Gorst','sgorstp@cpanel.net',0,'2024-06-18',483); #SWITCHED HERE 482 TO 483
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (117,'Berne','Fitzroy','bfitzroyq@wix.com',1,'2024-08-01',127);
+INSERT INTO User_Admin(UserID,FirstName,LastName,Email,isActive,LastLogin,AdminID) VALUES (118,'Harlie','Porcher','hporcherr@github.io',0,'2024-11-22',665);
 
