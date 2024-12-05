@@ -4,15 +4,17 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.write("# About this App")
+st.write("# About Us")
 
 st.markdown (
     """
-    This is a demo app for CS 3200 Course Project.  
-
-    The goal of this demo is to provide information on the tech stack 
-    being used as well as demo some of the features of the various platforms. 
-
-    Stay tuned for more information and features to come!
+    &nbsp; U-Connect is a data-driven, student-centric networking platform that 
+    empowers students by providing direct access to peer-generated insights 
+    and experiences. Through detailed profiles showcasing academic courses, 
+    co-op placements, and study-abroad opportunities, students can easily connect 
+    with others who have faced similar academic and professional challenges. 
+    This platform collects and analyzes real student data, helping users make 
+    informed decisions about courses, co-ops, and career paths.
+    
     """
         )
