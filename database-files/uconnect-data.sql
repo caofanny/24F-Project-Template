@@ -123,7 +123,6 @@ INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (117,'Crystie','Keppin'
 INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (118,'Susannah','Rubinchik','srubinchik39@discovery.com');
 
 -- INSERTING MOCK DATA FOR Courses
-
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (1,'Introduction to Biology','Schuyler Chasemoore','A foundational course exploring biological principles and systems.',1.77,true);
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (2,'History of Art','Megan Burgisi','A survey of artistic movements, styles, and historical significance.',1.53,true);
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (3,'Statistics 101','Basile Jaffrey','An introductory course on statistical methods and data analysis.',3.9,true);
@@ -159,6 +158,92 @@ INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive)
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (33,'Foreign Language Conversation Practice','Elva Cornehl','A practical course to enhance fluency in a foreign language.',1.4,true);
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (34,'Introduction to Anthropology','Jaquelin Hards','A study of human cultures, societies, and their development.',4.03,true);
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (35,'Introduction to Biology','Ransell Polfer','A foundational course exploring biological principles and systems.',2.27,true);
+
+
+-- INSERTING MOCK DATA FOR Reviews
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (1, 'lmathews0', 6, 'tpridie0@disqus.com', 2.5, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (2, 'tklasen1', 8, 'aeglese1@reverbnation.com', 5, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (3, 'ralennikov2', 2, 'aerwin2@t.co', 4, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (4, 'bleggen3', 65, 'mhobbing3@ebay.co.uk', 1, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (5, 'nstansbury4', 5, 'phandrek4@myspace.com', 3.5, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (6, 'craven5', 4, 'ethews5@lycos.com', 1.5, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (7, 'bconnichie6', 16, 'lguillond6@pagesperso-orange.fr', 4.5, 'could be better.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (8, 'bbish7', 15, 'tmcalpine7@cornell.edu', 5, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (9, 'mflowitt8', 26, 'ychestnut8@hc360.com', 3, 'Terrible course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (10, 'cgaule9', 23, 'nvandenvelden9@shareasale.com', 2, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (11, 'smanntschkea', 1, 'bhumerstonea@xrea.com', 3, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (12, 'tchiecob', 28, 'kskillingsb@networksolutions.com', 1, 'could be better.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (13, 'vchawkleyc', 1, 'ncallanderc@squarespace.com', 1.5, 'Terrible course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (14, 'rwynnd', 5, 'khandslipd@friendfeed.com', 3.5, 'could be better.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (15, 'plehrere', 17, 'mdortone@arizona.edu', 5, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (16, 'pgarbottf', 17, 'cgierckf@yahoo.co.jp', 3.5, 'could be better.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (17, 'mlenschg', 25, 'cantoszczykg@virginia.edu', 1, 'could be better.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (18, 'clyenyngh', 22, 'xstammerh@geocities.jp', 2, 'could be better.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (19, 'edarkotti', 15, 'khardwarei@google.es', 3, 'waste of time and money.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (20, 'htalj', 71, 'rhundeyj@purevolume.com', 4.5, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (21, 'jpettigreek', 66, 'pdyterk@addthis.com', 1, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (22, 'rditterl', 82, 'cbarefootl@dyndns.org', 4, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (23, 'rsandsallanm', 18, 'sstodhartm@dot.gov', 2.5, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (24, 'apartonn', 20, 'frankingn@vistaprint.com', 3.5, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (25, 'snibleyo', 1, 'broddero@mapy.cz', 2, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (26, 'jslorancep', 11, 'gnorewoodp@adobe.com', 5, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (27, 'hlowbridgeq', 12, 'egermainq@europa.eu', 3, 'waste of time and money.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (28, 'oweskerr', 18, 'dnormadellr@photobucket.com', 1.5, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (29, 'mmcgrouthers', 4, 'rseacrofts@barnesandnoble.com', 1.5, 'Terrible course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (30, 'sboughtont', 19, 'lmendust@meetup.com', 3.5, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (31, 'emceneryu', 16, 'uburchellu@slashdot.org', 3.5, 'waste of time and money.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (32, 'cmullinv', 27, 'bskulev@si.edu', 3.5, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (33, 'jfawderyw', 18, 'kduchesnew@chron.com', 4.5, 'waste of time and money.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (34, 'ohoffnerx', 4, 'mmanuelyx@usa.gov', 4, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (35, 'tjanseny', 15, 'sarnally@skyrock.com', 1, 'Great course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (36, 'dlarkinz', 65, 'mivashkovz@privacy.gov.au', 4.5, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (37, 'jswateridge10', 4, 'rtwist10@nifty.com', 4, 'could be better.');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (38, 'rogiany11', 2, 'afriedlos11@t-online.de', 1.5, 'highly recommend!');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (39, 'mbyforth12', 26, 'ijulyan12@walmart.com', 1.5, 'Average course');
+INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (40, 'slichfield13', 3, 'cbrisse13@biblegateway.com', 1.5, 'Terrible course');
+
+-- INSERTING MOCK DATA FOR Reviews Made
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (35,1);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (11,2);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (3,3);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (9,4);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (22,5);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (4,6);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (2,7);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (34,8);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (21,9);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (3,10);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (11,11);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (26,12);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (6,13);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (7,14);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (34,15);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (22,16);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (23,17);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (25,18);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (30,19);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (13,20);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (27,21);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (33,22);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (2,23);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (20,24);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (13,25);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (3,26);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (29,27);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (24,28);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (14,29);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (23,30);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (16,31);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (17,32);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (21,33);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (18,34);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (25,35);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (25,36);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (5,37);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (11,38);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (17,39);
+INSERT INTO Reviews_Made(CoursesID,ReviewID) VALUES (19,40);
+
 
 -- INSERTING MOCK DATA FOR Company
 INSERT INTO Company(Name,Location,Industry,CompanyID) VALUES ('Fidelity Investments','San Diego','Hospitality','169');
