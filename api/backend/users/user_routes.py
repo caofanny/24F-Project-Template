@@ -2,6 +2,7 @@
 # Sample customers blueprint of endpoints
 # Remove this file if you are not using it in your project
 ########################################################
+import datetime
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -17,14 +18,22 @@ users = Blueprint('users', __name__)
 
 
 #------------------------------------------------------------
-# Get all users from the system
+# Get all users and their last login from the system
 @users.route('/users', methods=['GET'])
 def get_users():
 
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT u.UserID, u.FirstName, u.LastName, u.Email, 
-                   FROM Users u
-    ''')
+    # Join Users with Students, Alumni, and Advisors to get LastLogin for each user
+    query = '''
+    SELECT u.UserID, u.FirstName, u.LastName, u.Email,
+           COALESCE(s.LastLogin, a.LastLogin, adv.LastLogin) AS LastLogin
+    FROM User u
+    LEFT JOIN Student s ON u.UserID = s.UserID
+    LEFT JOIN Alumnus a ON u.UserID = a.UserID
+    LEFT JOIN Advisor adv ON u.UserID = adv.UserID
+    '''
+
+    cursor.execute(query)
     
     theData = cursor.fetchall()
     
@@ -78,7 +87,7 @@ def update_user(uid):
     
     # Use the extracted data in your SQL query or application logic
     query = '''
-        UPDATE Users
+        UPDATE User
         SET FirstName = %s, LastName = %s, Email = %s
         WHERE UserID = %s
     '''
@@ -96,7 +105,7 @@ def delete_user(uid):
     cursor = db.get_db().cursor()
 
     # Delete the user directly from the Users table
-    query = "DELETE FROM Users WHERE UserID = %s"
+    query = "DELETE FROM User WHERE UserID = %s"
     cursor.execute(query, (uid,))
     db.get_db().commit()
 
@@ -110,18 +119,18 @@ def get_performance():
     current_time = datetime.now()
 
     # Calculate the time 30 minutes ago
-    time_threshold = current_time - timedelta(minutes=30)
+    time_threshold = current_time - datetime.timedelta(minutes=30)
 
     cursor = db.get_db().cursor()
 
     # Query to select users who have logged in within the last 30 minutes
     query = """
-    SELECT u.UserID, u.FirstName, u.LastName, u.Email, u.UserType, s.lastlogin
-    FROM Users u
-    LEFT JOIN student s ON u.UserID = s.UserID
-    LEFT JOIN alumni a ON u.UserID = a.UserID
-    LEFT JOIN advisor ad ON u.UserID = ad.UserID
-    LEFT JOIN admin ad2 ON u.UserID = ad2.UserID
+    SELECT u.UserID, u.FirstName, u.LastName, u.Email
+    FROM User u
+    LEFT JOIN Student s ON u.UserID = s.UserID
+    LEFT JOIN Alumnus a ON u.UserID = a.UserID
+    LEFT JOIN Advisor ad ON u.UserID = ad.UserID
+    LEFT JOIN Admin ad2 ON u.UserID = ad2.UserID
     WHERE (s.lastlogin >= %s OR a.lastlogin >= %s OR ad.lastlogin >= %s OR ad2.lastlogin >= %s)
     """
 
@@ -135,32 +144,190 @@ def get_performance():
     return the_response
 
 #------------------------------------------------------------
-# Get customer detail for customer with particular userID
-#   Notice the manner of constructing the query. 
-@customers.route('/customers/<userID>', methods=['GET'])
-def get_customer(userID):
-    current_app.logger.info('GET /customers/<userID> route')
+# Get the user activity
+
+# Route to get total active and inactive users with percentage
+@users.route('/users/status', methods=['GET'])
+def get_user_status():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT id, first_name, last_name FROM customers WHERE id = {0}'.format(userID))
+    cursor.execute('''SELECT COUNT(*) FROM Users WHERE isActive = 1''')  # Active users
+    active_users = cursor.fetchone()[0]
     
+    cursor.execute('''SELECT COUNT(*) FROM Users WHERE isActive = 0''')  # Inactive users
+    inactive_users = cursor.fetchone()[0]
+    
+    total_users = active_users + inactive_users
+    active_percentage = (active_users / total_users) * 100 if total_users > 0 else 0
+    
+    the_response = make_response(jsonify({
+        "active_users": active_users,
+        "inactive_users": inactive_users,
+        "active_percentage": round(active_percentage, 2)
+    }))
+    the_response.status_code = 200  # Set status code to 200
+    return the_response
+
+# Route to get total active and inactive students with percentage
+@users.route('/users/students-status', methods=['GET'])
+def get_student_status():
+    cursor = db.get_db().cursor()
+    cursor.execute('''SELECT COUNT(*) FROM Student WHERE isActive = 1''')  # Active students
+    active_students = cursor.fetchone()[0]
+    
+    cursor.execute('''SELECT COUNT(*) FROM Student WHERE isActive = 0''')  # Inactive students
+    inactive_students = cursor.fetchone()[0]
+    
+    total_students = active_students + inactive_students
+    active_percentage = (active_students / total_students) * 100 if total_students > 0 else 0
+    
+    the_response = make_response(jsonify({
+        "active_students": active_students,
+        "inactive_students": inactive_students,
+        "active_percentage": round(active_percentage, 2)
+    }))
+    the_response.status_code = 200  # Set status code to 200
+    return the_response
+
+# Route to get total active and inactive alumni with percentage
+@users.route('/users/alumni-status', methods=['GET'])
+def get_alumni_status():
+    cursor = db.get_db().cursor()
+    cursor.execute('''SELECT COUNT(*) FROM Alumnus WHERE isActive = 1''')  # Active alumni
+    active_alumni = cursor.fetchone()[0]
+    
+    cursor.execute('''SELECT COUNT(*) FROM Alumnus WHERE isActive = 0''')  # Inactive alumni
+    inactive_alumni = cursor.fetchone()[0]
+    
+    total_alumni = active_alumni + inactive_alumni
+    active_percentage = (active_alumni / total_alumni) * 100 if total_alumni > 0 else 0
+    
+    the_response = make_response(jsonify({
+        "active_alumni": active_alumni,
+        "inactive_alumni": inactive_alumni,
+        "active_percentage": round(active_percentage, 2)
+    }))
+    the_response.status_code = 200  # Set status code to 200
+    return the_response
+
+# Route to get total active and inactive advisors with percentage
+@users.route('/users/advisors-status', methods=['GET'])
+def get_advisor_status():
+    cursor = db.get_db().cursor()
+    cursor.execute('''SELECT COUNT(*) FROM Advisor WHERE isActive = 1''')  # Active advisors
+    active_advisors = cursor.fetchone()[0]
+    
+    cursor.execute('''SELECT COUNT(*) FROM Advisor WHERE isActive = 0''')  # Inactive advisors
+    inactive_advisors = cursor.fetchone()[0]
+    
+    total_advisors = active_advisors + inactive_advisors
+    active_percentage = (active_advisors / total_advisors) * 100 if total_advisors > 0 else 0
+    
+    the_response = make_response(jsonify({
+        "active_advisors": active_advisors,
+        "inactive_advisors": inactive_advisors,
+        "active_percentage": round(active_percentage, 2)
+    }))
+    the_response.status_code = 200  # Set status code to 200
+    return the_response
+
+#------------------------------------------------------------
+# Returns a list of students and their data
+@users.route('/users/students', methods=['GET'])
+def get_students():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, Major, Year
+        FROM Student;
+    '''
+
+    cursor.execute(query)
     theData = cursor.fetchall()
-    
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
 
 #------------------------------------------------------------
-# Makes use of the very simple ML model in to predict a value
-# and returns it to the user
-@customers.route('/prediction/<var01>/<var02>', methods=['GET'])
-def predict_value(var01, var02):
-    current_app.logger.info(f'var01 = {var01}')
-    current_app.logger.info(f'var02 = {var02}')
+# Return a list of all students who took the specific course
+@users.route('/users/students/<course_name>', methods=['GET'])
+def get_students_courses(course_name):
+    cursor = db.get_db().cursor()
 
-    returnVal = predict(var01, var02)
-    return_dict = {'result': returnVal}
-
-    the_response = make_response(jsonify(return_dict))
+    query = '''
+        SELECT u.FirstName, u.LastName, u.Email 
+        FROM USER u
+	        JOIN Courses_Taken ct ON ct.UserID = u.UserID
+	        JOIN Courses c ON ct.CourseID = c.CourseID
+        WHERE c.Name = %s;
+    '''
+    data = (course_name,)
+    cursor.execute(query, data)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
     the_response.status_code = 200
-    the_response.mimetype = 'application/json'
+    return the_response
+
+#------------------------------------------------------------
+# Return a list of all students who worked at a specific company
+@users.route('/users/students/<company_name>', methods=['GET'])
+def get_students_company(company_name):
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT u.FirstName, u.LastName, u.Email 
+        FROM USER u
+	        JOIN Company_Worked cw ON cw.UserID = u.UserID
+	        JOIN Company c ON c.CompanyID = cw.CompanyId
+        WHERE c.Name = %s;
+    '''
+    data = (company_name,)
+    cursor.execute(query, data)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Returns a list of students and their coop status
+@users.route('/users/advisor/students/', methods=['GET'])
+def get_students_coop():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, Major, Year, CoopStatus
+        FROM Student;
+    '''
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Returns the coop placement rate for students
+@users.route('/users/advisor/students/coop', methods=['GET'])
+def get_students_coop_rate():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT 
+            COUNT(*) AS total_students,
+            SUM(CASE WHEN CoopStatus = 'Placed' THEN 1 ELSE 0 END) AS students_with_coop,
+            SUM(CASE WHEN CoopStatus = 'Searching' THEN 1 ELSE 0 END) AS students_still_searching,
+            ROUND(SUM(CASE WHEN CoopStatus = 'Placed' THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) AS coop_percentage
+        FROM Student;
+    '''
+    cursor.execute(query)
+    theData = cursor.fetchone()  # Use fetchone because you expect a single result with aggregated values
+    
+    # Format the result
+    result = {
+        "total_students": theData[0],
+        "students_with_coop": theData[1],
+        "students_still_searching": theData[2],
+        "coop_percentage": theData[3]
+    }
+
+    the_response = make_response(jsonify(result))
+    the_response.status_code = 200
     return the_response
