@@ -24,8 +24,8 @@ def get_post():
 
     cursor = db.get_db().cursor()
     query = '''
-       SELECT p.PostID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName, 
-               p.Title, p.Slug, p.Content, p.CreatedAt, p.UpdatedAt, p.PublishedAt
+        SELECT p.PostID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName, 
+            p.Title, p.Slug, p.Content, p.CreatedAt, p.UpdatedAt, p.PublishedAt
         FROM Post p
         JOIN User u ON p.AuthorID = u.UserID
     '''
@@ -42,7 +42,7 @@ def get_post():
 @posts.route('/posts', methods=['POST'])
 def make_post():
 
-    data = request.json
+    data = request.get_json()
     author_id = data.get('AuthorID')
     title = data.get('Title')
     slug = data.get('Slug')
@@ -63,21 +63,25 @@ def make_post():
 
 #------------------------------------------------------------
 # Update the status of the reports made
-@posts.route('/posts/{post-id}', methods=['PUT'])
+@posts.route('/posts/<post-id>', methods=['PUT'])
 def answer_report(post_id):
+    current_app.logger.info(f'PUT /posts/{post_id} route')
 
-    data = request.json
+    data = request.get_json()
     title = data.get('Title')
     slug = data.get('Slug')
     content = data.get('Content')
     published_at = data.get('PublishedAt')
 
-    cursor = db.get_db().cursor()
+    current_app.logger.info(f'Received data: title={title}, slug={slug},
+                             content={content}, publishedat={published_at}')
+    
     query = '''
         UPDATE Post
         SET Title = %s, Slug = %s, Content = %s, PublishedAt = %s, UpdatedAt = CURRENT_TIMESTAMP
         WHERE PostID = %s
     '''
+    cursor = db.get_db().cursor()
     cursor.execute(query, (title, slug, content, published_at, post_id))
     db.get_db().commit()
 
@@ -88,7 +92,7 @@ def answer_report(post_id):
 
 #------------------------------------------------------------
 # Delete the post
-@posts.route('/posts/{post-id}', methods=['DELETE'])
+@posts.route('/posts/<post-id>', methods=['DELETE'])
 def delete_post(post_id):
     cursor = db.get_db().cursor()
     query = '''
@@ -99,22 +103,23 @@ def delete_post(post_id):
     db.get_db().commit()
 
     
-    return 'report created!'
+    return 'report deleted!'
+
 #------------------------------------------------------------
 # Get all comments for a specific post
-@posts.route('/posts/post-id/comments', methods=['GET'])
+@posts.route('/posts/<post-id>/comments', methods=['GET'])
 def get_comments_for_post(post_id):
 
     cursor = db.get_db().cursor()
     query = '''
         SELECT c.CommentID, c.AuthorID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName,
-                c.Content, c.PublishedAt, c.CreatedAt
+            c.Content, c.PublishedAt, c.CreatedAt
         FROM Post_Comment c
         JOIN User u ON c.AuthorID = u.UserID
         WHERE c.PostID = %s
-        '''
+    '''
     cursor.execute(query, (post_id,))
-    comments = cursor.fetchall()
+    theData = cursor.fetchall()
 
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
@@ -122,28 +127,28 @@ def get_comments_for_post(post_id):
 
 #------------------------------------------------------------
 # Returns the information of the post comment
-@posts.route('/posts/{post-id}/comments/{comment_id}', methods=['GET'])
+@posts.route('/posts/<post-id>/comments/<comment_id>', methods=['GET'])
 def get_comment(post_id, comment_id):
 
     cursor = db.get_db().cursor()
     query = '''
-            SELECT c.CommentID, c.PostID, c.AuthorID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName,
-                   c.Content, c.PublishedAt, c.CreatedAt
-            FROM Post_Comment c
-            JOIN User u ON c.AuthorID = u.UserID
-            WHERE c.PostID = %s AND c.CommentID = %s
-        '''
+        SELECT c.CommentID, c.PostID, c.AuthorID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName,
+            c.Content, c.PublishedAt, c.CreatedAt
+        FROM Post_Comment c
+        JOIN User u ON c.AuthorID = u.UserID
+        WHERE c.PostID = %s AND c.CommentID = %s
+    '''
     cursor.execute(query, (post_id, comment_id))
-    comment = cursor.fetchone()
-
-
-    return 'post comment'
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
 
 #------------------------------------------------------------
 # Create a new comment for a specific post
-@posts.route('/posts/<int:post_id>/comments', methods=['POST'])
+@posts.route('/posts/<post_id>/comments', methods=['POST'])
 def create_comment(post_id):
-    data = request.json
+    data = request.get_json()
     author_id = data.get('AuthorID')
     content = data.get('Content')
     published_at = data.get('PublishedAt', None)
@@ -152,7 +157,7 @@ def create_comment(post_id):
     query = '''
         INSERT INTO Post_Comment (PostID, AuthorID, Content, PublishedAt)
         VALUES (%s, %s, %s, %s)
-        '''
+    '''
     cursor.execute(query, (post_id, author_id, content, published_at))
     db.get_db().commit()
 

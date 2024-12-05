@@ -14,21 +14,17 @@ from backend.ml_models.model01 import predict
 #------------------------------------------------------------
 # Create a new Blueprint object, which is a collection of 
 # routes.
-reports = Blueprint('reports', __name__)
+courses = Blueprint('courses', __name__)
 
 
 #------------------------------------------------------------
-# Return a list of reports
-@reports.route('/reports', methods=['GET'])
-def get_reports():
+# Return a list of courses
+@courses.route('/course', methods=['GET'])
+def get_courses():
 
     cursor = db.get_db().cursor()
     query = '''
-        SELECT u.FirstName AS UserReported, a.FirstName AS AnsweredBy, 
-               r.Reason, r.Status, r.ReportDate
-        FROM Reports r
-            JOIN User_Admin a ON r.AnsweredBy = a.AdminID
-            JOIN User u ON r.UserReported = u.UserID
+        SELECT * FROM Courses
     '''
     cursor.execute(query)
     
@@ -39,8 +35,75 @@ def get_reports():
     return the_response
 
 #------------------------------------------------------------
-# Create a report
-@reports.route('/reports', methods=['POST'])
+# Return a list of courses students have completed
+@courses.route('/course/completed', methods=['GET'])
+def get_courses_from_student():
+
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT s.StudentID, s.FirstName, s.LastName, s.Email, s.Major, c.Name AS CourseName 
+        FROM Student s 
+            JOIN Courses_Taken ct ON s.UserID = ct.UserID 
+            JOIN Courses c ON ct.CoursesID = c.CoursesID 
+        ORDER BY s.StudentID, c.Name;
+    '''
+    cursor.execute(query)
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Return all reviews for a specific course
+@courses.route('/courses/<couse-name>/review/', methods=['GET'])
+def get_course_reviews(course_name):
+
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT r.Title AS Review_Title, r.Rating, r.Content
+        FROM Reviews_Made rm 
+            JOIN Review r ON rm.ReviewID = r.ReviewID 
+            JOIN Courses c ON rm.CoursesID = c.CoursesID 
+        WHERE c.Name = %s
+        ORDER BY r.Rating DESC;
+
+    '''
+    cursor.execute(query, course_name)
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Add a new review for the specific course
+@courses.route('/courses/<couse-name>/review/', methods=['POST'])
+def get_course_reviews(course_name):
+
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT r.Title AS Review_Title, r.Rating, r.Content
+        FROM Reviews_Made rm 
+            JOIN Review r ON rm.ReviewID = r.ReviewID 
+            JOIN Courses c ON rm.CoursesID = c.CoursesID 
+        WHERE c.Name = %s
+        ORDER BY r.Rating DESC;
+
+    '''
+    cursor.execute(query, course_name)
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Update a review for a specific course
+@courses.route('/courses/<couse-name>/review/<review-id>', methods=['PUT'])
 def make_report():
 
     reported_by = request.json.get('ReportedBy')  # UserID of the person reporting
@@ -60,48 +123,8 @@ def make_report():
     return 'report created!'
 
 #------------------------------------------------------------
-# Return the specific report
-@reports.route('/reports/{report-id}', methods=['GET'])
-def get_specific_report(report_id):
-
-    cursor = db.get_db().cursor()
-    
-    # Query to fetch the specific report by report_id
-    query = '''
-        SELECT u.FirstName AS UserReported, a.FirstName AS AnsweredBy, r.Reason, r.Status, r.ReportDate
-        FROM Reports r
-        JOIN User_Admin a ON r.AnsweredBy = a.AdminID
-        JOIN User u ON r.UserReported = u.UserID
-        WHERE r.ReportID = %s;
-    '''
-    cursor.execute(query, report_id)
-    theData = cursor.fetchall()
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
-
-#------------------------------------------------------------
-# Update the status of the reports made
-@reports.route('/reports/{report-id}', methods=['PUT'])
-def answer_report(report_id):
-
-    answered_by = request.json.get('AnsweredBy')  # Admin/user ID handling the report
-    status = request.json.get('Status') 
-    cursor = db.get_db().cursor()
-    query = '''
-        UPDATE Reports
-        SET AnsweredBy = %s, Status = %s
-        WHERE ReportID = %s
-    '''
-
-    cursor.execute(query, (answered_by, status, report_id))
-    db.get_db().commit()
-
-    return 'report answered!'
-
-#------------------------------------------------------------
 # Delete the report
-@reports.route('/reports/{report-id}', methods=['DELETE'])
+@reports.route('/courses/<couse-name>/review/<review-id>', methods=['DELETE'])
 def delete_report(report_id):
 
     cursor = db.get_db().cursor()

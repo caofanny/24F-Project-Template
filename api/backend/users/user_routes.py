@@ -74,7 +74,7 @@ def update_user(uid):
     # Log the request route
     current_app.logger.info(f'PUT /users/{uid} route')
 
-        # Get JSON data from the request
+    # Get JSON data from the request
     user_info = request.get_json()
     
     # Extract values from the JSON payload
@@ -239,6 +239,23 @@ def get_students():
     query = '''
         SELECT FirstName, LastName, Email, Major, Year
         FROM Student;
+    '''
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Returns a list of alumni and their data
+@users.route('/users/alumni', methods=['GET'])
+def get_alumni():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, College, Major, CurrentCompany 
+        FROM Alumnus;
     '''
 
     cursor.execute(query)

@@ -61,7 +61,7 @@ def make_report():
 
 #------------------------------------------------------------
 # Return the specific report
-@reports.route('/reports/{report-id}', methods=['GET'])
+@reports.route('/reports/<report-id>', methods=['GET'])
 def get_specific_report(report_id):
 
     cursor = db.get_db().cursor()
@@ -82,7 +82,7 @@ def get_specific_report(report_id):
 
 #------------------------------------------------------------
 # Update the status of the reports made
-@reports.route('/reports/{report-id}', methods=['PUT'])
+@reports.route('/reports/<report-id>', methods=['PUT'])
 def answer_report(report_id):
 
     answered_by = request.json.get('AnsweredBy')  # Admin/user ID handling the report
@@ -101,7 +101,7 @@ def answer_report(report_id):
 
 #------------------------------------------------------------
 # Delete the report
-@reports.route('/reports/{report-id}', methods=['DELETE'])
+@reports.route('/reports/<report-id>', methods=['DELETE'])
 def delete_report(report_id):
 
     cursor = db.get_db().cursor()
