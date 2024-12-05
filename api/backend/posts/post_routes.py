@@ -14,12 +14,12 @@ from backend.ml_models.model01 import predict
 #------------------------------------------------------------
 # Create a new Blueprint object, which is a collection of 
 # routes.
-posts = Blueprint('post', __name__)
+posts = Blueprint('posts', __name__)
 
 
 #------------------------------------------------------------
 # Return a list of post
-@posts.route('/post', methods=['GET'])
+@posts.route('/posts', methods=['GET'])
 def get_post():
 
     cursor = db.get_db().cursor()
@@ -39,7 +39,7 @@ def get_post():
 
 #------------------------------------------------------------
 # Create a post
-@posts.route('/post', methods=['POST'])
+@posts.route('/posts', methods=['POST'])
 def make_post():
 
     data = request.json
@@ -63,7 +63,7 @@ def make_post():
 
 #------------------------------------------------------------
 # Update the status of the reports made
-@reports.route('/post/{post-id}', methods=['PUT'])
+@posts.route('/posts/{post-id}', methods=['PUT'])
 def answer_report(post_id):
 
     data = request.json
@@ -88,7 +88,7 @@ def answer_report(post_id):
 
 #------------------------------------------------------------
 # Delete the post
-@posts.route('/posts/<int:post_id>', methods=['DELETE'])
+@posts.route('/posts/{post-id}', methods=['DELETE'])
 def delete_post(post_id):
     cursor = db.get_db().cursor()
     query = '''
@@ -100,4 +100,61 @@ def delete_post(post_id):
 
     
     return 'report created!'
+#------------------------------------------------------------
+# Get all comments for a specific post
+@posts.route('/posts/post-id/comments', methods=['GET'])
+def get_comments_for_post(post_id):
+
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT c.CommentID, c.AuthorID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName,
+                c.Content, c.PublishedAt, c.CreatedAt
+        FROM Post_Comment c
+        JOIN User u ON c.AuthorID = u.UserID
+        WHERE c.PostID = %s
+        '''
+    cursor.execute(query, (post_id,))
+    comments = cursor.fetchall()
+
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+#------------------------------------------------------------
+# Returns the information of the post comment
+@posts.route('/posts/{post-id}/comments/{comment_id}', methods=['GET'])
+def get_comment(post_id, comment_id):
+
+    cursor = db.get_db().cursor()
+    query = '''
+            SELECT c.CommentID, c.PostID, c.AuthorID, u.FirstName AS AuthorFirstName, u.LastName AS AuthorLastName,
+                   c.Content, c.PublishedAt, c.CreatedAt
+            FROM Post_Comment c
+            JOIN User u ON c.AuthorID = u.UserID
+            WHERE c.PostID = %s AND c.CommentID = %s
+        '''
+    cursor.execute(query, (post_id, comment_id))
+    comment = cursor.fetchone()
+
+
+    return 'post comment'
+
+#------------------------------------------------------------
+# Create a new comment for a specific post
+@posts.route('/posts/<int:post_id>/comments', methods=['POST'])
+def create_comment(post_id):
+    data = request.json
+    author_id = data.get('AuthorID')
+    content = data.get('Content')
+    published_at = data.get('PublishedAt', None)
+
+    cursor = db.get_db().cursor()
+    query = '''
+        INSERT INTO Post_Comment (PostID, AuthorID, Content, PublishedAt)
+        VALUES (%s, %s, %s, %s)
+        '''
+    cursor.execute(query, (post_id, author_id, content, published_at))
+    db.get_db().commit()
+
+    return make_response(jsonify({"message": "Comment created successfully"}), 201)
     
