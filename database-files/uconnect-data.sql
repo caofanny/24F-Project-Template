@@ -822,8 +822,8 @@ INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (12,5
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (105,557,'resolved','Violating user guidelines',870);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (114,550,'pending','Violating user guidelines',337);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (24,773,'pending','Spam behavior',969);
-INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (64,437,'pending','Inappropriate content',488);--#MADE ANSWEREDBY 437
-INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (108,437,'pending','Offensive language',657);   --#MADE ANSWEREDBY 437
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (64,437,'pending','Inappropriate content',488);
+INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (108,437,'pending','Offensive language',657);   
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (54,562,'pending','Inappropriate content',347);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (1,437,'resolved','Spam behavior',672);
 INSERT INTO Reports(UserReported,AnsweredBy,Status,Reason,ReportID) VALUES (90,946,'pending','Inappropriate content',325);
