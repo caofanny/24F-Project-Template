@@ -182,6 +182,7 @@ def get_user_status():
 
     return jsonify(active_inactive_data)
 
+# didnt use (delete if you are using, otherwise we can delete this function before submitting)
 @users.route('/users/inactive', methods=['GET'])
 def get_inactive_users():
     query = '''
@@ -229,6 +230,7 @@ def get_student_status():
     the_response.status_code = 200  # Set status code to 200
     return the_response
 
+# didnt use (delete if you are using, otherwise we can delete this function before submitting)
 @users.route('/users/students/inactive', methods=['GET'])
 def get_inactive_students():
     cursor = db.get_db().cursor()

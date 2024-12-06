@@ -1,5 +1,10 @@
+import logging
 import streamlit as st
 import requests
+
+from modules.nav import SideBarLinks
+
+logger = logging.getLogger(__name__)
 
 # Title
 st.title("User Management Dashboard")
@@ -7,6 +12,27 @@ st.title("User Management Dashboard")
 # Sidebar Menu
 menu_options = ["Create User", "Update User", "Delete User"]
 choice = st.sidebar.radio("Select an option:", menu_options)
+back = st.sidebar.button("Back")
+
+# Function to Display Users on the Main Page
+def display_users():
+    st.write("### All Users with Last Login Time")
+
+    try:
+        response = requests.get("http://api:4000/u/users")
+        if response.status_code == 200:
+            users_data = response.json()
+
+            if users_data:
+                st.dataframe(users_data, use_container_width=True)
+            else:
+                st.write("No users found in the database.")
+
+        else:
+            st.write(f"Failed to fetch users. Status code: {response.status_code}")
+
+    except requests.exceptions.RequestException as e:
+        st.write(f"API Error: {str(e)}")
 
 # Function to Create User Form
 def create_user_form():
@@ -28,7 +54,7 @@ def create_user_form():
 
                 if response.status_code == 200:
                     st.sidebar.success("User successfully added to the database.")
-                    st.query_params(refresh="true")
+                    display_users()
                 else:
                     st.sidebar.warning(f"Failed to create user. Status code: {response.status_code}")
 
@@ -58,7 +84,7 @@ def update_user_form():
 
                 if response.status_code == 200:
                     st.sidebar.success("User successfully updated.")
-                    st.query_params(refresh="true")
+                    display_users()
                 else:
                     st.sidebar.warning(f"Failed to update user. Status code: {response.status_code}")
 
@@ -78,7 +104,7 @@ def delete_user_form():
                 response = requests.delete(f"http://api:4000/u/users/{user_id}")
                 if response.status_code == 200:
                     st.sidebar.success("User successfully deleted!")
-                    st.query_params(refresh="true")
+                    display_users()
                 else:
                     st.sidebar.error(f"Failed to delete user: {response.status_code}")
             except requests.exceptions.RequestException as e:
@@ -86,33 +112,16 @@ def delete_user_form():
         else:
             st.sidebar.warning("Please fill out all fields.")
 
-# Function to Display Users on the Main Page
-def display_users():
-    st.write("### All Users with Last Login Time")
-
-    try:
-        response = requests.get("http://api:4000/u/users")
-        if response.status_code == 200:
-            users_data = response.json()
-
-            if users_data:
-                st.dataframe(users_data, use_container_width=True)
-            else:
-                st.write("No users found in the database.")
-
-        else:
-            st.write(f"Failed to fetch users. Status code: {response.status_code}")
-
-    except requests.exceptions.RequestException as e:
-        st.write(f"API Error: {str(e)}")
-
 # Show Sidebar Forms Based on Selection
 if choice == "Create User":
     create_user_form()
 elif choice == "Update User":
     update_user_form()
-elif choice == "Update User":
+elif choice == "Delete User":
     delete_user_form()
+
+if back:
+    st.switch_page('pages/2_System_Administrator_Home.py')
 
 # Main Page - Display Users
 display_users()
