@@ -49,12 +49,16 @@ def create_users():
     last_name = user_data.get('LastName')
     email = user_data.get('Email')
 
+    if not first_name or not last_name or not email:
+            return jsonify({"error": "Missing user data"}), 400
+    
     # Get a database cursor
     cursor = db.get_db().cursor()
+    
         
     # Insert the new user into the database
     cursor.execute('''
-        INSERT INTO Users (FirstName, LastName, Email)
+        INSERT INTO User (FirstName, LastName, Email)
         VALUES (%s, %s, %s)
     ''', (first_name, last_name, email))
         
@@ -73,9 +77,9 @@ def update_user(uid):
     user_info = request.get_json()
     
     # Extract values from the JSON payload
-    firstname = user_info.get('firstname')  # Key 'firstname' from JSON
-    lastname = user_info.get('lastname')    # Key 'lastname' from JSON
-    email = user_info.get('email')          # Key 'email' from JSON
+    firstname = user_info.get('FirstName')  # Key 'firstname' from JSON
+    lastname = user_info.get('LastName')    # Key 'lastname' from JSON
+    email = user_info.get('Email')          # Key 'email' from JSON
     
     # Print or log the extracted values for debugging
     current_app.logger.info(f'Received data: firstname={firstname}, lastname={lastname}, email={email}')
