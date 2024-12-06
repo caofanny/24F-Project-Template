@@ -144,28 +144,70 @@ def get_performance():
 # Route to get total active and inactive users with percentage
 @users.route('/users/status', methods=['GET'])
 def get_user_status():
+    query = '''
+        SELECT 
+            IsActive,
+            COUNT(*) AS TotalUsers,
+            ROUND((COUNT(*) * 100.0 / (SELECT COUNT(*) FROM (
+                SELECT UserID FROM Advisor 
+                UNION ALL 
+                SELECT UserID FROM Student 
+                UNION ALL 
+                SELECT UserID FROM Alumnus
+            ) AS AllUsers)), 2) AS Percentage
+        FROM (
+            SELECT IsActive FROM Advisor
+            UNION ALL
+            SELECT IsActive FROM Student
+            UNION ALL
+            SELECT IsActive FROM Alumnus
+        ) AS Combined
+        GROUP BY IsActive;
+        '''
+
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT COUNT(*) FROM Users WHERE isActive = 1''')  # Active users
-    active_users = cursor.fetchone()[0]
+    cursor.execute(query)
     
-    cursor.execute('''SELECT COUNT(*) FROM Users WHERE isActive = 0''')  # Inactive users
-    inactive_users = cursor.fetchone()[0]
+    results = cursor.fetchall()
+
+    # Format the data for response
+    active_inactive_data = {
+        "Active": next((item for item in results if item['IsActive'] == 1), None),
+        "Inactive": next((item for item in results if item['IsActive'] == 0), None)
+    }
+
+    return jsonify(active_inactive_data)
+
+@users.route('/users/inactive', methods=['GET'])
+def get_inactive_users():
+    query = '''
+        SELECT 
+            UserID, FirstName, LastName, Email
+        FROM Student
+        WHERE IsActive = FALSE
+        UNION
+        SELECT UserID, FirstName,LastName, Email
+        FROM Advisor
+        WHERE IsActive = FALSE
+        UNION
+        SELECT UserID, FirstName,  LastName, Email 
+        FROM Alumnus
+        WHERE IsActive = FALSE;
+    '''
     
-    total_users = active_users + inactive_users
-    active_percentage = (active_users / total_users) * 100 if total_users > 0 else 0
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
     
-    the_response = make_response(jsonify({
-        "active_users": active_users,
-        "inactive_users": inactive_users,
-        "active_percentage": round(active_percentage, 2)
-    }))
-    the_response.status_code = 200  # Set status code to 200
-    return the_response
+    results = cursor.fetchall()
+    return jsonify(results)
+
 
 # Route to get total active and inactive students with percentage
 @users.route('/users/students-status', methods=['GET'])
 def get_student_status():
     cursor = db.get_db().cursor()
+    
+
     cursor.execute('''SELECT COUNT(*) FROM Student WHERE isActive = 1''')  # Active students
     active_students = cursor.fetchone()[0]
     
@@ -183,6 +225,28 @@ def get_student_status():
     the_response.status_code = 200  # Set status code to 200
     return the_response
 
+@users.route('/users/students/inactive', methods=['GET'])
+def get_inactive_students():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT 
+            StudentID, 
+            FirstName, 
+            LastName, 
+            Email, 
+            LastLogin, 
+            CoopStatus, 
+            Year
+        FROM Student
+        WHERE IsActive = FALSE;
+    '''
+    cursor.execute(query)
+    theData = cursor.fetchall()  
+
+    return make_response(jsonify(theData), 200)
+
+    
 # Route to get total active and inactive alumni with percentage
 @users.route('/users/alumni-status', methods=['GET'])
 def get_alumni_status():
@@ -323,23 +387,28 @@ def get_students_coop_rate():
 
     query = '''
         SELECT 
-            COUNT(*) AS total_students,
-            SUM(CASE WHEN CoopStatus = 'Placed' THEN 1 ELSE 0 END) AS students_with_coop,
-            SUM(CASE WHEN CoopStatus = 'Searching' THEN 1 ELSE 0 END) AS students_still_searching,
-            ROUND(SUM(CASE WHEN CoopStatus = 'Placed' THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) AS coop_percentage
+            COALESCE(COUNT(*), 0) AS total_students,
+            COALESCE(SUM(CASE WHEN CoopStatus = 'Found Co-op' THEN 1 ELSE 0 END), 0) AS students_with_coop,
+            COALESCE(SUM(CASE WHEN CoopStatus = 'Searching' THEN 1 ELSE 0 END), 0) AS students_still_searching,
+            CASE 
+                WHEN COUNT(*) = 0 THEN 0
+                ELSE ROUND(SUM(CASE WHEN CoopStatus = 'Found Co-op' THEN 1 ELSE 0 END) / COUNT(*) * 100, 2)
+            END AS coop_percentage
         FROM Student;
+
     '''
     cursor.execute(query)
-    theData = cursor.fetchone()  # Use fetchone because you expect a single result with aggregated values
-    
-    # Format the result
-    result = {
-        "total_students": theData[0],
-        "students_with_coop": theData[1],
-        "students_still_searching": theData[2],
-        "coop_percentage": theData[3]
-    }
+    theData = cursor.fetchone()  # Single row with aggregated results
 
-    the_response = make_response(jsonify(result))
-    the_response.status_code = 200
-    return the_response
+    # Map results into a dictionary
+    # result = {
+    #     "total_students": theData[0],
+    #     "students_with_coop": theData[1],
+    #     "students_still_searching": theData[2],
+    #     "coop_percentage": theData[3]
+    # }
+
+    # Return the JSON response
+    response = make_response(jsonify(theData), 200)
+    return response
+
