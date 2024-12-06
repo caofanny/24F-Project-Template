@@ -40,7 +40,7 @@ st.write("List of students who are generally inactive:")
 columns = ['FirstName', 'LastName', 'Email', 'LastLogin', 'CoopStatus', 'Year', 'Action']
 
 # Display headers above the data table
-header_cols = st.columns([1, 1, 1, 1, 1, 1, 1, 1])  # Adjust column widths as needed
+header_cols = st.columns([1, 1, 1, 1, 1, 1, 1])  # Adjust column widths as needed
 with header_cols[0]:
     st.write("FirstName")
 with header_cols[1]:
@@ -58,7 +58,7 @@ with header_cols[6]:
 
 # Iterate through the student data and display each student in a row with a delete button
 for student in inactive_students:
-    row_cols = st.columns([1, 1, 1, 1, 1, 1, 1, 1])  # Same column width for each row
+    row_cols = st.columns([1, 1, 1, 1, 1, 1, 1,])  # Same column width for each row
     
     with row_cols[0]:
         st.write(student['FirstName'])
