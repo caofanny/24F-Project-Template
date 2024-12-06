@@ -121,6 +121,9 @@ INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (115,'Cleve','Stillwell
 INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (116,'Elihu','Bromwich','ebromwich37@t.co');
 INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (117,'Crystie','Keppin','ckeppin38@sciencedaily.com');
 INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (118,'Susannah','Rubinchik','srubinchik39@discovery.com');
+INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (119,'Shane','Pumphrey','spumphrey3a@edublogs.org');
+INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (120,'Carol-jean','Cleever','ccleever3b@census.gov');
+INSERT INTO User(UserId,FirstName,LastName,Email) VALUES (121,'Morley','McCloughlin','mmccloughlin3c@smugmug.com');
 
 -- INSERTING MOCK DATA FOR ADVISORS
 INSERT INTO Advisor(UserID, AdvisorID, FirstName, LastName, College, Email, Phone, IsActive, LastLogin) VALUES (31, 1, 'Marlo', 'Rochford', 'Khoury College of Computer Sciences', 'mrochfordu@google.de', '810-697-1889', true, '2024-05-05');
