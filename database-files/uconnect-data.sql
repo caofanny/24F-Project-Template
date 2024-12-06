@@ -226,6 +226,36 @@ INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive)
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (34,'Introduction to Anthropology','Jaquelin Hards','A study of human cultures, societies, and their development.',4.03,true);
 INSERT INTO Courses(CoursesId,Name,Professor,Description,AverageRating,IsActive) VALUES (35,'Introduction to Biology','Ransell Polfer','A foundational course exploring biological principles and systems.',2.27,true);
 
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (18,20);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (18,34);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (17,12);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (35,18);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (31,5);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (22,22);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (2,35);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (15,2);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (4,15);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (17,11);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (32,25);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (8,17);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (31,27);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (15,35);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (4,10);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (20,6);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (11,12);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (2,13);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (35,8);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (4,11);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (23,20);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (15,27);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (31,33);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (23,14);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (26,2);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (31,9);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (4,23);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (15,25);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (15,28);
+INSERT INTO Courses_Taken(UserID,CoursesID) VALUES (3,16);
 
 -- INSERTING MOCK DATA FOR Reviews
 INSERT INTO Review(ReviewID, Name, AuthorID, Title, Rating, Content) VALUES (1, 'lmathews0', 6, 'tpridie0@disqus.com', 2.5, 'Great course');
