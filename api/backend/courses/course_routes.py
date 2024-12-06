@@ -57,7 +57,7 @@ def get_courses_from_student():
 
 #------------------------------------------------------------
 # Return all reviews for a specific course
-@courses.route('/courses/<couse-name>/review/', methods=['GET'])
+@courses.route('/courses/<course_name>/review/', methods=['GET'])
 def get_course_reviews(course_name):
 
     cursor = db.get_db().cursor()
@@ -80,7 +80,7 @@ def get_course_reviews(course_name):
 
 #------------------------------------------------------------
 # Add a new review for the specific course
-@courses.route('/courses/<couse-name>/review/', methods=['POST'])
+@courses.route('/courses/<course_name>/review/', methods=['POST'])
 def add_course_reviews(course_name):
 
     data = request.get_json()
@@ -103,7 +103,7 @@ def add_course_reviews(course_name):
 
 #------------------------------------------------------------
 # Update a review for a course
-@courses.route('/courses/review/<review-id>', methods=['PUT'])
+@courses.route('/courses/review/<review_id>', methods=['PUT'])
 def update_course_review(review_id):
 
     current_app.logger.info(f'PUT /courses/review/{review_id} route')
@@ -128,7 +128,7 @@ def update_course_review(review_id):
 
 #------------------------------------------------------------
 # Delete the review
-@courses.route('/courses/review/<review-id>', methods=['DELETE'])
+@courses.route('/courses/review/<review_id>', methods=['DELETE'])
 def delete_report(review_id):
 
     cursor = db.get_db().cursor()

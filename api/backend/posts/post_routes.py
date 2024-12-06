@@ -63,7 +63,7 @@ def make_post():
 
 #------------------------------------------------------------
 # Update the status of the reports made
-@posts.route('/posts/<post-id>', methods=['PUT'])
+@posts.route('/posts/<post_id>', methods=['PUT'])
 def answer_report(post_id):
     current_app.logger.info(f'PUT /posts/{post_id} route')
 
@@ -91,7 +91,7 @@ def answer_report(post_id):
 
 #------------------------------------------------------------
 # Delete the post
-@posts.route('/posts/<post-id>', methods=['DELETE'])
+@posts.route('/posts/<post_id>', methods=['DELETE'])
 def delete_post(post_id):
     cursor = db.get_db().cursor()
     query = '''
@@ -106,7 +106,7 @@ def delete_post(post_id):
 
 #------------------------------------------------------------
 # Get all comments for a specific post
-@posts.route('/posts/<post-id>/comments', methods=['GET'])
+@posts.route('/posts/<post_id>/comments', methods=['GET'])
 def get_comments_for_post(post_id):
 
     cursor = db.get_db().cursor()
@@ -126,7 +126,7 @@ def get_comments_for_post(post_id):
 
 #------------------------------------------------------------
 # Returns the information of the post comment
-@posts.route('/posts/<post-id>/comments/<comment_id>', methods=['GET'])
+@posts.route('/posts/<post_id>/comments/<comment_id>', methods=['GET'])
 def get_comment(post_id, comment_id):
 
     cursor = db.get_db().cursor()
