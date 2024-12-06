@@ -917,3 +917,37 @@ INSERT INTO Alumnus(UserID,FirstName,LastName,College,Major,Email,Num_Coops,Curr
 INSERT INTO Alumnus(UserID,FirstName,LastName,College,Major,Email,Num_Coops,CurrentCompany,CurrentPosition,IsActive,AlumnusID) VALUES (88,'Tab','Flude','College of Engineering','Biology','tflude2f@vkontakte.ru',1,'ABC Industries','Software Engineer',1,883);
 INSERT INTO Alumnus(UserID,FirstName,LastName,College,Major,Email,Num_Coops,CurrentCompany,CurrentPosition,IsActive,AlumnusID) VALUES (89,'Kirbie','Honisch','College of Science','Computer Science','khonisch2g@google.fr',1,'Smith & Co.','Customer Service Representative',1,237);
 INSERT INTO Alumnus(UserID,FirstName,LastName,College,Major,Email,Num_Coops,CurrentCompany,CurrentPosition,IsActive,AlumnusID) VALUES (90,'Brit','Glaysher','Bouvé College of Health Sciences','English','bglaysher2h@delicious.com',2,'Smith & Co.','Marketing Coordinator',1,425);
+
+
+
+-- INSERTING Alumni_Mentors
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (1,233);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (2,501);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (3,520);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (4,938);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (5,627);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (6,912);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (7,558);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (8,420);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (9,368);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (10,584);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (11,570);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (12,122);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (13,856);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (14,243);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (15,804);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (16,490);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (17,532);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (18,964);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (19,580);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (20,725);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (21,221);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (22,171);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (23,909);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (24,228);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (25,159);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (26,948);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (27,409);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (28,883);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (29,237);
+INSERT INTO Alumni_Mentors(StudentID,AlumnusID) VALUES (30,425);
