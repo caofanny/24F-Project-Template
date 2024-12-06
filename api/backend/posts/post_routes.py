@@ -73,8 +73,7 @@ def answer_report(post_id):
     content = data.get('Content')
     published_at = data.get('PublishedAt')
 
-    current_app.logger.info(f'Received data: title={title}, slug={slug},
-                             content={content}, publishedat={published_at}')
+    current_app.logger.info(f'Received data: title={title}, slug={slug}, content={content}, publishedat={published_at}')
     
     query = '''
         UPDATE Post

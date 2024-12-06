@@ -113,8 +113,7 @@ def update_course_review(review_id):
     rating = data.get('Rating')
     content = data.get('Content')
 
-    current_app.logger.info(f'Received data: title={title}, 
-                            rating={rating}, content={content}')
+    current_app.logger.info(f'Received data: title={title}, rating={rating}, content={content}')
     
     cursor = db.get_db().cursor()
     query = '''

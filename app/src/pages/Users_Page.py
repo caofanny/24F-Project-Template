@@ -23,15 +23,13 @@ users_data = {}
 
 # Try to fetch data from the backend API
 try:
-    # Replace with your backend URL
-    backend_url = "http://api:4000/p/products"  # Change to the actual backend URL
-    response = requests.get(f"{backend_url}/users")
+    response = requests.get("http://api:4000/u/users").json()
     
     # Check if the request was successful
-    if response.status_code == 200:
-        users_data = response.json()  # Parse the JSON response into a dictionary
-    else:
-        st.warning(f"Failed to fetch data. Status code: {response.status_code}")
+    #if response.status_code == 200:
+    #    users_data = response.json()  # Parse the JSON response into a dictionary
+    #else:
+    #    st.warning(f"Failed to fetch data. Status code: {response.status_code}")
 except requests.exceptions.RequestException as e:
     st.write("**Important**: Could not connect to the API, so using dummy data.")
     # Fallback to dummy data if the API request fails
@@ -40,6 +38,7 @@ except requests.exceptions.RequestException as e:
         {"UserID": 2, "FirstName": "Jane", "LastName": "Smith", "Email": "jane.smith@example.com", "Status": "Inactive"},
         {"UserID": 3, "FirstName": "Tom", "LastName": "Brown", "Email": "tom.brown@example.com", "Status": "Active"},
     ]
+
 
 # Display the users data as a table
 st.subheader("Users List")
