@@ -19,7 +19,7 @@ def display_users():
     st.write("### All Users with Last Login Time")
 
     try:
-        response = requests.get("http://api:4000/u/users")
+        response = requests.get("http://api:4000/u/users/alumni")
         if response.status_code == 200:
             users_data = response.json()
 
