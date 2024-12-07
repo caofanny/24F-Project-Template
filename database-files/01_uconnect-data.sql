@@ -576,44 +576,6 @@ INSERT INTO Post(AuthorID,Title,Slug,Content,PublishedAT,PostID) VALUES (67,'The
 INSERT INTO Post(AuthorID,Title,Slug,Content,PublishedAT,PostID) VALUES (38,'How to Ace Your Job Interview','dgjwed-60','Tips for career growth','2024-02-04',628);
 INSERT INTO Post(AuthorID,Title,Slug,Content,PublishedAT,PostID) VALUES (85,'Building a Strong LinkedIn Profile','dfpfeun-17','Tips for career growth','2024-05-27',448);
 
--- Insert data into Posts_Made
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (233, 346);  -- Delora Mulvenna
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (501, 849);  -- Elle Slatcher
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (520, 795);  -- Eran Keitch
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (938, 209);  -- Conroy Sudddard
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (627, 716);  -- Sada Germon
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (912, 136);  -- Shaine Casillas
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (558, 604);  -- Banky Gidden
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (420, 645);  -- Adam Wandtke
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (368, 276);  -- Lennie Sergean
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (584, 210);  -- Reeta Gillum
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (570, 744);  -- Abigail Josefer
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (122, 110);  -- Barn Stoneman
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (856, 495);  -- Major D'Alesco
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (243, 835);  -- Culver Constanza
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (804, 747);  -- Rhys Kepp
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (490, 974);  -- Horten Addey
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (532, 657);  -- Matilde Laws
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (964, 204);  -- Guglielmo Fairrie
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (580, 459);  -- Beitris Heinish
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (725, 223);  -- Taylor Wherry
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (221, 734);  -- Monika Symms
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (171, 924);  -- Tallie Morfett
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (909, 829);  -- Frederic Warnock
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (228, 617);  -- Teresa Masdin
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (159, 848);  -- Elvera Vasyukhnov
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (948, 399);  -- Joye De Simone
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (409, 523);  -- Betteanne Hollerin
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (883, 300);  -- Tab Flude
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (237, 430);  -- Kirbie Honisch
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (425, 412);  -- Brit Glaysher
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (233, 869);  -- Delora Mulvenna
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (501, 656);  -- Elle Slatcher
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (520, 886);  -- Eran Keitch
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (938, 628);  -- Conroy Sudddard
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (627, 448);  -- Sada Germon
-
-
 
 -- INSERTING MOCK DATA FOR Post_Comments
 -- ADDING MOCK DATA FOR Post_Commment
