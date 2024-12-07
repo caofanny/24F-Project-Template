@@ -1,5 +1,7 @@
 # `database-files` Folder
 
+Link to view our presentation video: https://drive.google.com/file/d/1ghYJkm4rAB-ELgSBYD5wMHzwxi2A8Ac1/view?usp=drive_link
+
 ## Setup
 
 To reconnect a changed database:
