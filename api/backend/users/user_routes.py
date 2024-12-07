@@ -376,7 +376,7 @@ def get_students_coop():
     cursor = db.get_db().cursor()
 
     query = '''
-        SELECT FirstName, LastName, Email, Major, Year, CoopStatus
+        SELECT FirstName, LastName, Email, Major, Year, CoopStatus, AdvisorID
         FROM Student;
     '''
     cursor.execute(query)
