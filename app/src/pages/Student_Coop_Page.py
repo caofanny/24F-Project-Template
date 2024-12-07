@@ -5,13 +5,14 @@ import streamlit as st
 from streamlit_extras.app_logo import add_logo
 import requests
 import plotly.express as px
+import matplotlib.pyplot as plt
 from modules.nav import SideBarLinks
 
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
 # set the header of the page
-st.header('Current Coop Search Stats:')
+st.header('Current Coop Search Statistics:')
 
 #let's get the information we need for the coop search status 
 
@@ -94,4 +95,25 @@ else:
     st.write("Everyone is searching!")
 
 
+#adding some space
+st.write("")
 
+
+#LET'S ADD PIE CHARTS AND STATISTICS ON COOP SEARCHS
+#Let's make a pie chart with the data
+st.subheader("Visuals!")
+labels = ['With Co-ops', 'Without Co-ops', 'Not Searching']
+sizes = [len(with_coops), len(without_coops), len(not_searching)]
+#coloring the pie chart
+colors = ['#4CAF50', '#FFC107', '#FF5722']  
+
+plt.figure(figsize=(3, 3))
+plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=50, wedgeprops={'edgecolor': 'black'})
+
+plt.axis('equal')
+plt.title('Co-op Status Distribution')
+
+plt.show()
+
+#Making it show up on stream lit
+st.pyplot(plt)

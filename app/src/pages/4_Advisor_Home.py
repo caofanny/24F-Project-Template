@@ -19,12 +19,12 @@ if st.button('Your Students',
              use_container_width=True):
   st.switch_page('pages/Advisor_Students_Page.py')
 
-if st.button("Co-op Status",
+if st.button("View Co-op Statistics",
              type='primary',
              use_container_width=True):
   st.switch_page('pages/Student_Coop_Page.py')
 
-if st.button('View Statistics', 
+if st.button('Make a Report', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/Advisor_Stats_Page.py')
+  st.switch_page('pages/Make_Report.py')
