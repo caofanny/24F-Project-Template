@@ -30,27 +30,6 @@ def get_courses():
     return the_response
 
 #------------------------------------------------------------
-# Return a list of courses students have completed
-@courses.route('/course/completed', methods=['GET'])
-def get_courses_from_student():
-
-    cursor = db.get_db().cursor()
-    query = '''
-        SELECT s.StudentID, s.FirstName, s.LastName, s.Email, s.Major, c.Name AS CourseName 
-        FROM Student s 
-            JOIN Courses_Taken ct ON s.UserID = ct.UserID 
-            JOIN Courses c ON ct.CoursesID = c.CoursesID 
-        ORDER BY s.StudentID, c.Name;
-    '''
-    cursor.execute(query)
-    
-    theData = cursor.fetchall()
-    
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
-
-#------------------------------------------------------------
 # Return all reviews
 @courses.route('/courses/review/', methods=['GET'])
 def get_course_reviews():

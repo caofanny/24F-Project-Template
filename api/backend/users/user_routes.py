@@ -182,7 +182,7 @@ def get_user_status():
 
     return jsonify(active_inactive_data)
 
-# didnt use
+
 @users.route('/users/inactive', methods=['GET'])
 def get_inactive_users():
     query = '''
@@ -231,29 +231,6 @@ def get_student_status():
     }
     return jsonify(active_inactive_data)
 
-# didnt use (delete if you are using, otherwise we can delete this function before submitting)
-@users.route('/users/students/inactive', methods=['GET'])
-def get_inactive_students():
-    cursor = db.get_db().cursor()
-
-    query = '''
-        SELECT 
-            StudentID, 
-            FirstName, 
-            LastName, 
-            Email, 
-            LastLogin, 
-            CoopStatus, 
-            Year
-        FROM Student
-        WHERE IsActive = FALSE;
-    '''
-    cursor.execute(query)
-    theData = cursor.fetchall()  
-
-    return make_response(jsonify(theData), 200)
-
-    
 # Route to get total active and inactive alumni with percentage
 @users.route('/users/alumni-status', methods=['GET'])
 def get_alumni_status():
@@ -338,8 +315,6 @@ def get_alumni():
 #------------------------------------------------------------
 # get list of student connect with alumnus
 
-
-# get list of student connect with alumnus
 @users.route('/users/alumnus/<alumnus_id>/students', methods=['GET'])
 def get_connected_students(alumnus_id):
     cursor = db.get_db().cursor()
@@ -352,9 +327,6 @@ def get_connected_students(alumnus_id):
     cursor.execute(query, (alumnus_id,))
     students = cursor.fetchall()
     return make_response(jsonify(students), 200)
-
-
-
 
 # Returns this alumn's data and experience
 @users.route('/users/alumni/major', methods=['GET'])
@@ -408,8 +380,6 @@ def get_alumni_filter_job():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
-
-
 
 #------------------------------------------------------------
 # Return a list of all students who took the specific course
