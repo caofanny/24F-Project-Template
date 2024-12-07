@@ -1,5 +1,14 @@
 # UConnect Project Repository
 
+## env file setup
+
+SECRET_KEY=<somepassword>
+DB_USER=root
+DB_HOST=db
+DB_PORT=3306
+DB_NAME=uconnect
+MYSQL_ROOT_PASSWORD=<somepassword>
+
 ## Running the Project
 
 - `docker compose up -d` to start all the containers in the background
