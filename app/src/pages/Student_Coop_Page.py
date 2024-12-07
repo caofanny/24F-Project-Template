@@ -43,12 +43,16 @@ for s in students:
 
 with_coops = list()
 without_coops = list()
+not_searching = list()
+
 #now from those students let's get the ones with coops secured
 for s in assigned_students:
     if s['CoopStatus'] == 'Found co-op':
         with_coops.append(s)  
-    else:
+    if s['CoopStatus'] == 'Searching':
         without_coops.append(s)
+    else:
+        not_searching.append(s)
 
 #now that we have the info make it into a datafram
 df_found_coops = pd.DataFrame(with_coops)
@@ -60,6 +64,11 @@ df_without_coops = pd.DataFrame(without_coops)
 
 #removing unnecssary columns
 df_without_coops.drop('AdvisorID', axis=1, inplace=True)
+
+#making df
+df_not_searching = pd.DataFrame(not_searching)
+#removing unnecssary columns
+df_not_searching.drop('AdvisorID', axis=1, inplace=True)
 
 
 # Making tables 
@@ -75,5 +84,14 @@ if not df_without_coops.empty:
     st.dataframe(df_without_coops)
 else:
     st.write("All assigned students have found co-ops.")
+
+
+# Display tables for students who are not searching
+st.subheader("Students Not Searching for Co-ops :sleeping:")
+if not df_not_searching.empty:
+    st.dataframe(df_not_searching)
+else:
+    st.write("Everyone is searching!")
+
 
 
