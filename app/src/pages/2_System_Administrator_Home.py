@@ -14,7 +14,7 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('Manage Inactive Users', 
+if st.button('Manage Users', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/Users_Page.py')

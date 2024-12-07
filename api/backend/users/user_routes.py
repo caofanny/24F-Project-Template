@@ -182,7 +182,7 @@ def get_user_status():
 
     return jsonify(active_inactive_data)
 
-# didnt use (delete if you are using, otherwise we can delete this function before submitting)
+# didnt use
 @users.route('/users/inactive', methods=['GET'])
 def get_inactive_users():
     query = '''
@@ -210,25 +210,26 @@ def get_inactive_users():
 # Route to get total active and inactive students with percentage
 @users.route('/users/students-status', methods=['GET'])
 def get_student_status():
-    cursor = db.get_db().cursor()
-    
+    query = '''
+    SELECT 
+        IsActive,
+        COUNT(*) AS TotalStudents,
+        ROUND((COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Student)), 2) AS Percentage
+    FROM Student
+    GROUP BY IsActive;
+'''
 
-    cursor.execute('''SELECT COUNT(*) FROM Student WHERE isActive = 1''')  # Active students
-    active_students = cursor.fetchone()[0]
-    
-    cursor.execute('''SELECT COUNT(*) FROM Student WHERE isActive = 0''')  # Inactive students
-    inactive_students = cursor.fetchone()[0]
-    
-    total_students = active_students + inactive_students
-    active_percentage = (active_students / total_students) * 100 if total_students > 0 else 0
-    
-    the_response = make_response(jsonify({
-        "active_students": active_students,
-        "inactive_students": inactive_students,
-        "active_percentage": round(active_percentage, 2)
-    }))
-    the_response.status_code = 200  # Set status code to 200
-    return the_response
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+
+    results = cursor.fetchall()
+
+    # Format the data for response
+    active_inactive_data = {
+        "Active": next((item for item in results if item['IsActive'] == 1), None),
+        "Inactive": next((item for item in results if item['IsActive'] == 0), None)
+    }
+    return jsonify(active_inactive_data)
 
 # didnt use (delete if you are using, otherwise we can delete this function before submitting)
 @users.route('/users/students/inactive', methods=['GET'])
@@ -256,44 +257,50 @@ def get_inactive_students():
 # Route to get total active and inactive alumni with percentage
 @users.route('/users/alumni-status', methods=['GET'])
 def get_alumni_status():
+    query_alumni = '''
+        SELECT 
+            IsActive,
+            COUNT(*) AS TotalAlumni,
+            ROUND((COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Alumnus)), 2) AS Percentage
+        FROM Alumnus
+        GROUP BY IsActive;
+    '''
+
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT COUNT(*) FROM Alumnus WHERE isActive = 1''')  # Active alumni
-    active_alumni = cursor.fetchone()[0]
-    
-    cursor.execute('''SELECT COUNT(*) FROM Alumnus WHERE isActive = 0''')  # Inactive alumni
-    inactive_alumni = cursor.fetchone()[0]
-    
-    total_alumni = active_alumni + inactive_alumni
-    active_percentage = (active_alumni / total_alumni) * 100 if total_alumni > 0 else 0
-    
-    the_response = make_response(jsonify({
-        "active_alumni": active_alumni,
-        "inactive_alumni": inactive_alumni,
-        "active_percentage": round(active_percentage, 2)
-    }))
-    the_response.status_code = 200  # Set status code to 200
-    return the_response
+    cursor.execute(query_alumni)
+
+    results_alumni = cursor.fetchall()
+
+    # Format the data for response
+    active_inactive_alumni = {
+        "Active": next((item for item in results_alumni if item['IsActive'] == 1), None),
+        "Inactive": next((item for item in results_alumni if item['IsActive'] == 0), None)
+    }
+    return jsonify(active_inactive_alumni)
 
 # Route to get total active and inactive advisors with percentage
 @users.route('/users/advisors-status', methods=['GET'])
 def get_advisor_status():
+    query_advisors = '''
+        SELECT 
+            IsActive,
+            COUNT(*) AS TotalAdvisors,
+            ROUND((COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Advisor)), 2) AS Percentage
+        FROM Advisor
+        GROUP BY IsActive;
+    '''
+
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT COUNT(*) FROM Advisor WHERE isActive = 1''')  # Active advisors
-    active_advisors = cursor.fetchone()[0]
-    
-    cursor.execute('''SELECT COUNT(*) FROM Advisor WHERE isActive = 0''')  # Inactive advisors
-    inactive_advisors = cursor.fetchone()[0]
-    
-    total_advisors = active_advisors + inactive_advisors
-    active_percentage = (active_advisors / total_advisors) * 100 if total_advisors > 0 else 0
-    
-    the_response = make_response(jsonify({
-        "active_advisors": active_advisors,
-        "inactive_advisors": inactive_advisors,
-        "active_percentage": round(active_percentage, 2)
-    }))
-    the_response.status_code = 200  # Set status code to 200
-    return the_response
+    cursor.execute(query_advisors)
+
+    results_advisors = cursor.fetchall()
+
+    # Format the data for response
+    active_inactive_advisors = {
+        "Active": next((item for item in results_advisors if item['IsActive'] == 1), None),
+        "Inactive": next((item for item in results_advisors if item['IsActive'] == 0), None)
+    }
+    return jsonify(active_inactive_advisors)
 
 #------------------------------------------------------------
 # Returns a list of students and their data
