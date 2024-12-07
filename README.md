@@ -5,12 +5,12 @@
 ## env file setup
 Choose a strong password and replace <somepassword>
 
-SECRET_KEY=<somepassword>
-DB_USER=root
-DB_HOST=db
-DB_PORT=3306
-DB_NAME=uconnect
-MYSQL_ROOT_PASSWORD=<somepassword>
+- SECRET_KEY=someCrazyS3cR3T!Key.!
+- DB_USER=root
+- DB_HOST=db
+- DB_PORT=3306
+- DB_NAME=uconnect
+- MYSQL_ROOT_PASSWORD=choosesomepassword
 
 ## Running the Project
 
