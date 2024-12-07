@@ -75,7 +75,7 @@ def get_course_reviews():
 #------------------------------------------------------------
 # Add a new review for the specific course
 @courses.route('/courses/review/', methods=['POST'])
-def add_course_reviews(course_name):
+def add_course_reviews():
 
     data = request.get_json()
     username = data.get('Name')
