@@ -335,6 +335,43 @@ def get_alumni():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
+#------------------------------------------------------------
+# get list of student connect with alumnus
+@users.route('/users/alumnus/<alumnus_id>/students', methods=['GET'])
+def get_connected_students(alumnus_id):
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT s.StudentID, s.FirstName, s.LastName, s.Email, s.Major, s.Year
+        FROM Alumni_Mentors am
+        JOIN Student s ON am.StudentID = s.StudentID
+        WHERE am.AlumnusID = %s;
+    '''
+    cursor.execute(query, (alumnus_id,))
+    students = cursor.fetchall()
+    return make_response(jsonify(students), 200)
+
+@users.route('/u/users/alumnus/<mentor_id>/students', methods=['POST'])
+def add_student_connection(mentor_id):
+    """Add a student connection to the specified alumnus."""
+    # Your logic here, e.g., retrieving data from the request and updating the database.
+    request_data = request.get_json()
+    student_id = request_data.get('StudentID')
+    
+    if not student_id:
+        return jsonify({"error": "StudentID is required"}), 400
+    
+    cursor = db.get_db().cursor()
+    query = '''
+        INSERT INTO Alumni_Mentors (StudentID, AlumnusID)
+        VALUES (%s, %s)
+    '''
+    try:
+        cursor.execute(query, (student_id, mentor_id))
+        db.get_db().commit()
+        return jsonify({"message": "Connection added successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 #------------------------------------------------------------
 # Return a list of all students who took the specific course
