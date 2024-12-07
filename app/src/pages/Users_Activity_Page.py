@@ -1,48 +1,63 @@
-import logging
-logger = logging.getLogger(__name__)
-import pandas as pd
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
-import world_bank_data as wb
-import matplotlib.pyplot as plt
-import numpy as np
-import plotly.express as px
 import requests
 
-from modules.nav import SideBarLinks
+# Set the title of the page
+st.set_page_config(page_title="User Dashboard", layout="wide")
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+back = st.sidebar.button("Back")
+st.title('📊 User Activity Dashboard')
 
-# set the header of the page
-st.header('View User Activity')
+# Define a function to make API calls and get JSON responses
+def get_api_data(endpoint):
+    try:
+        response = requests.get(f'http://api:4000/u/{endpoint}')
+        if response.status_code == 200:
+            return response.json()
+        else:
+            st.error(f"Failed to fetch data from {endpoint}")
+            return {}
+    except requests.exceptions.RequestException as e:
+        st.error(f"Connection Error: {str(e)}")
+        return {}
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+# Function to display data in a neat card style
+def display_data(category_name, data):
+    st.subheader(category_name)
+    getUser = "TotalUsers"
+    if category_name == "Student Statistics":
+        getUser = "TotalStudents"
+    elif category_name == "Alumni Statistics":
+        getUser = "TotalAlumni"
+    if category_name == "Advisor Statistics":
+        getUser = "TotalAdvisors"
 
-try: 
-    response = requests.get("http://api:4000/u/users").json()
-except requests.exceptions.RequestException as e:
-    st.write("no active users")
-# get the countries from the world bank data
-# with st.echo(code_location='above'):
-#     countries:pd.DataFrame = wb.get_countries()
-   
-#     st.dataframe(countries)
+    if data:
+        active_data = data.get('Active', {}).get(getUser, 0)
+        inactive_data = data.get('Inactive', {}).get(getUser, 0)
+        percentage_active = data.get('Active', {}).get(getUser, 0)
 
-# # the with statment shows the code for this block above it 
-# with st.echo(code_location='above'):
-#     arr = np.random.normal(1, 1, size=100)
-#     test_plot, ax = plt.subplots()
-#     ax.hist(arr, bins=20)
+        col1, col2, col3 = st.columns(3)
 
-#     st.pyplot(test_plot)
+        col1.metric("Active Users", active_data)
+        col2.metric("Inactive Users", inactive_data)
+        col3.metric("Active Percentage", f"{percentage_active}%")
+    else:
+        st.write("No data available.")
 
+# Get data for all statistics
+user_data = get_api_data('/users/status')
+student_data = get_api_data('/users/students-status')
+alumni_data = get_api_data('/users/alumni-status')
+advisor_data = get_api_data('/users/advisors-status')
 
-# with st.echo(code_location='above'):
-#     slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-#     data_crosstab = pd.crosstab(slim_countries['region'], 
-#                                 slim_countries['incomeLevel'],  
-#                                 margins = False) 
-#     st.table(data_crosstab)
-st.dataframe(response)  # Display data as a table
+st.write("---")
+display_data('User Statistics', user_data)
+st.write("---")
+display_data('Student Statistics', student_data)
+st.write("---")
+display_data('Alumni Statistics', alumni_data)
+st.write("---")
+display_data('Advisor Statistics', advisor_data)
+
+if back:
+    st.switch_page('pages/2_System_Administrator_Home.py')
