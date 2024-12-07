@@ -1,102 +1,125 @@
 import logging
-import requests
-import pandas as pd
 import streamlit as st
+import requests
+
 from modules.nav import SideBarLinks
 
-# Logger setup
 logger = logging.getLogger(__name__)
 
-# Sidebar Links
-SideBarLinks()
-
 # Title
-st.title("Your Posts Dashboard")
+st.title("Post Dashboard")
 
-# Hardcoded Alumnus ID for demonstration purposes
-alumnus_id = 233  # Replace with dynamic ID from session or login
+# Sidebar Menu
+menu_options = ["Create Post", "Update Post", "Delete Post"]
+choice = st.sidebar.radio("Select an option:", menu_options)
+back = st.sidebar.button("Back")
 
-# Base URL for API requests
-BASE_API_URL = "http://api:4000"  # Ensure this matches your Flask API URL
-
-# Function to fetch posts for the given alumnus
-def fetch_user_posts(alumnus_id):
-    """Fetch all posts made by the specified alumnus."""
+# Function to Display Posts on the Main Page
+def display_posts():
+    st.write("### All Posts")
     try:
-        # Filter posts by author using the `AuthorID` from the API
-        response = requests.get(f"{BASE_API_URL}/p/posts")
+        response = requests.get("http://api:4000/p/posts")
         if response.status_code == 200:
-            all_posts = response.json()
-            # Filter posts for the specific author ID
-            user_posts = [post for post in all_posts if post['AuthorID'] == alumnus_id]
-            return pd.DataFrame(user_posts) if user_posts else None
+            posts_data = response.json()
+
+            if posts_data:
+                st.dataframe(posts_data, use_container_width=True)
+            else:
+                st.write("No posts found in the database.")
+
         else:
-            st.error(f"Failed to fetch posts: {response.status_code}")
-            return None
+            st.error(f"Failed to fetch posts. Status code: {response.status_code}")
     except requests.exceptions.RequestException as e:
-        st.error(f"API Request failed: {str(e)}")
-        return None
+        st.error(f"API Error: {str(e)}")
 
-# Function to create a new post
+# Function to Create Post Form
 def create_post_form():
-    st.sidebar.write("### Create a New Post")
-    title = st.sidebar.text_input("Post Title")
-    slug = st.sidebar.text_input("Post Slug")
-    content = st.sidebar.text_area("Post Content")
-    published_at = st.sidebar.text_input("Publish Date (YYYY-MM-DD HH:MM:SS)", "")
-
-    submitted = st.sidebar.button("Create Post")
+    st.sidebar.write("### Create New Post Form")
+    author_id = st.sidebar.text_input("Enter your ID")
+    title = st.sidebar.text_input("Title")
+    slug = st.sidebar.text_input("Slug")
+    content = st.sidebar.text_area("Content")
+    submitted = st.sidebar.button("Submit")
 
     if submitted:
-        if title and slug and content:
+        if title and content and slug and author_id:
             new_post = {
-                "AuthorID": alumnus_id,
-                "Title": title,
+                "AuthorID": author_id,
                 "Slug": slug,
-                "Content": content,
-                "PublishedAt": published_at if published_at else None,
+                "Title": title,
+                "Content": content
             }
             try:
-                response = requests.post(f"{BASE_API_URL}/p/posts", json=new_post)
-                if response.status_code == 201:
-                    st.sidebar.success("Post created successfully!")
+                response = requests.post("http://api:4000/p/posts", json=new_post)
+
+                if response.status_code == 201:  # Assuming 201 for successful creation
+                    st.sidebar.success("Post successfully added to the database.")
                 else:
                     st.sidebar.error(f"Failed to create post. Status code: {response.status_code}")
+
             except requests.exceptions.RequestException as e:
                 st.sidebar.error(f"API Error: {str(e)}")
         else:
             st.sidebar.warning("Please fill out all fields.")
 
-# Function to delete a post
-def delete_post_form():
-    st.sidebar.write("### Delete a Post")
-    post_id = st.sidebar.number_input("Enter Post ID to Delete", min_value=1, step=1)
-
-    submitted = st.sidebar.button("Delete Post")
+# Function to Update Post Form
+def update_post_form():
+    st.sidebar.write("### Update Existing Post")
+    post_id = st.sidebar.number_input("Enter Post ID", min_value=1, step=1)
+    title = st.sidebar.text_input("New Title")
+    slug = st.sidebar.text_input("New Slug")
+    content = st.sidebar.text_area("New Content")
+    submitted = st.sidebar.button("Update")
 
     if submitted:
-        try:
-            response = requests.delete(f"{BASE_API_URL}/p/posts/{int(post_id)}")
-            if response.status_code == 200:
-                st.sidebar.success("Post deleted successfully!")
-            else:
-                st.sidebar.error(f"Failed to delete post. Status code: {response.status_code}")
-        except requests.exceptions.RequestException as e:
-            st.sidebar.error(f"API Error: {str(e)}")
+        if post_id and title and content and slug:
+            updated_data = {
+                "Title": title,
+                "Content": content,
+                "Slug": slug
+            }
+            try:
+                response = requests.put(f"http://api:4000/p/posts/{int(post_id)}", json=updated_data)
 
-# Display User's Posts
-def display_user_posts():
-    st.write("### Your Posts")
+                if response.status_code == 200:
+                    st.sidebar.success("Post successfully updated.")
+                else:
+                    st.sidebar.error(f"Failed to update post. Status code: {response.status_code}")
 
-    # Fetch posts
-    posts_df = fetch_user_posts(alumnus_id)
+            except requests.exceptions.RequestException as e:
+                st.sidebar.error(f"API Error: {str(e)}")
+        else: 
+            st.sidebar.warning("Please fill out all fields.")
 
-    if posts_df is not None and not posts_df.empty:
-        st.dataframe(posts_df, use_container_width=True)
-    else:
-        st.write("You have not made any posts yet.")
+# Function to Delete Post Form
+def delete_post_form(): 
+    st.sidebar.write("### Delete Existing Post")
+    post_id = st.sidebar.number_input("Enter Post ID", min_value=1, step=1)
+    submitted = st.sidebar.button("Delete")
 
-# Main Display Logic
-create_post_form()  # Sidebar for creating a new post
-delete_post_form()  # Sidebar for deleting a post
-display_user_posts()  # Main content: Display all posts
+    if submitted:
+        if post_id:
+            try:
+                response = requests.delete(f"http://api:4000/p/posts/{post_id}")
+                if response.status_code == 200:
+                    st.sidebar.success("Post successfully deleted!")
+                else:
+                    st.sidebar.error(f"Failed to delete post. Status code: {response.status_code}")
+            except requests.exceptions.RequestException as e:
+                st.sidebar.error(f"API Error: {str(e)}")
+        else:
+            st.sidebar.warning("Please fill out all fields.")
+
+# Show Sidebar Forms Based on Selection
+if choice == "Create Post":
+    create_post_form()
+elif choice == "Update Post":
+    update_post_form()
+elif choice == "Delete Post":
+    delete_post_form()
+
+if back:
+    st.switch_page('pages/3_Mentor_Home.py')
+
+# Main Page - Display Posts
+display_posts()

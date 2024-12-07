@@ -8,11 +8,9 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 from modules.nav import SideBarLinks
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
-
 # set the header of the page
 st.header('Current Coop Search Statistics:')
+back = st.sidebar.button("Back")
 
 #let's get the information we need for the coop search status 
 
@@ -117,3 +115,6 @@ plt.show()
 
 #Making it show up on stream lit
 st.pyplot(plt)
+
+if back:
+    st.switch_page('pages/4_Advisor_Home.py')

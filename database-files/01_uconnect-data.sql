@@ -171,7 +171,7 @@ INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, M
 INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, LastLogin, IsActive)VALUES(11, 11, 'Omar', 'Whyler', 'owhylera', 'COS', 'Political Science', 5, 'cklimmeka@wufoo.com', 11, 1, 0, 'Found co-op', '2024-12-02', true);
 INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, CoopPositionID, LastLogin, IsActive)VALUES(12, 12, 'Catha', 'Gurry', 'cgurryb', 'COSSH', 'History', 1, 'mleflemingb@washingtonpost.com', 12, 1, 1, 'Found co-op', 9745, '2023-12-27', false);
 INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, CoopPositionID, LastLogin, IsActive)VALUES(13, 13, 'Carey', 'Poultney', 'cpoultneyc', 'D\'Amor McKim', 'Mathematics', 1, 'vholsteinc@shareasale.com', 1, 1, 3, 'Searching', 2359, '2024-06-20', true);
-INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, CoopPositionID, LastLogin, IsActive)VALUES(14, 14, 'Mathian', 'Thurber', 'mthurberd', 'COE', 'Nursing', 1, 'mhuxterd@google.co.uk', 1, 1, 1, 'Found co-op', 6867, '2023-07-06', true);
+INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, CoopPositionID, LastLogin, IsActive)VALUES(14, 14, 'Alex', 'Thurber', 'mthurberd', 'COE', 'Nursing', 1, 'mhuxterd@google.co.uk', 1, 1, 1, 'Found co-op', 6867, '2023-07-06', true);
 INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, CoopPositionID, LastLogin, IsActive)VALUES(15, 15, 'Micky', 'Genthner', 'mgenthnere', 'COSSH', 'Art', 5, 'cfrenzle@hatena.ne.jp', 15, 1, 4, 'Found co-op', 9776, '2024-03-17', false);
 INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, CoopPositionID, LastLogin, IsActive)VALUES(16, 16, 'Emeline', 'Radki', 'eradkif', 'COSSH', 'Philosophy', 3, 'ltaysbilf@dmoz.org', 16, 1, 3, 'Not Searching', 8341, '2024-03-24', true);
 INSERT INTO Student(UserID, StudentID, FirstName, LastName, Username, College, Major, Year, Email, AdvisorID, MentorID, Num_Coops, CoopStatus, CoopPositionID, LastLogin, IsActive)VALUES(17, 17, 'Joellyn', 'Gibke', 'jgibkeg', 'Khoury', 'Engineering', 3, 'jhuskisson1@zimbio.com', 17, 1, 2, 'Searching', 8745, '2022-07-21', false);
@@ -575,44 +575,6 @@ INSERT INTO Post(AuthorID,Title,Slug,Content,PublishedAT,PostID) VALUES (111,'Ma
 INSERT INTO Post(AuthorID,Title,Slug,Content,PublishedAT,PostID) VALUES (67,'The Power of Personal Branding','xnsmiep-98','Exciting new job opportunity!','2024-03-05',886);
 INSERT INTO Post(AuthorID,Title,Slug,Content,PublishedAT,PostID) VALUES (38,'How to Ace Your Job Interview','dgjwed-60','Tips for career growth','2024-02-04',628);
 INSERT INTO Post(AuthorID,Title,Slug,Content,PublishedAT,PostID) VALUES (85,'Building a Strong LinkedIn Profile','dfpfeun-17','Tips for career growth','2024-05-27',448);
-
--- Insert data into Posts_Made
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (233, 346);  -- Delora Mulvenna
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (501, 849);  -- Elle Slatcher
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (520, 795);  -- Eran Keitch
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (938, 209);  -- Conroy Sudddard
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (627, 716);  -- Sada Germon
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (912, 136);  -- Shaine Casillas
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (558, 604);  -- Banky Gidden
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (420, 645);  -- Adam Wandtke
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (368, 276);  -- Lennie Sergean
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (584, 210);  -- Reeta Gillum
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (570, 744);  -- Abigail Josefer
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (122, 110);  -- Barn Stoneman
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (856, 495);  -- Major D'Alesco
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (243, 835);  -- Culver Constanza
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (804, 747);  -- Rhys Kepp
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (490, 974);  -- Horten Addey
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (532, 657);  -- Matilde Laws
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (964, 204);  -- Guglielmo Fairrie
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (580, 459);  -- Beitris Heinish
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (725, 223);  -- Taylor Wherry
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (221, 734);  -- Monika Symms
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (171, 924);  -- Tallie Morfett
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (909, 829);  -- Frederic Warnock
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (228, 617);  -- Teresa Masdin
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (159, 848);  -- Elvera Vasyukhnov
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (948, 399);  -- Joye De Simone
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (409, 523);  -- Betteanne Hollerin
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (883, 300);  -- Tab Flude
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (237, 430);  -- Kirbie Honisch
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (425, 412);  -- Brit Glaysher
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (233, 869);  -- Delora Mulvenna
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (501, 656);  -- Elle Slatcher
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (520, 886);  -- Eran Keitch
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (938, 628);  -- Conroy Sudddard
-INSERT INTO Posts_Made (AlumnusID, PostID) VALUES (627, 448);  -- Sada Germon
-
 
 
 -- INSERTING MOCK DATA FOR Post_Comments
