@@ -22,8 +22,8 @@ def get_reports():
         SELECT u.FirstName AS UserReported, a.FirstName AS AnsweredBy, 
                r.Reason, r.Status, r.ReportDate
         FROM Reports r
-            JOIN User_Admin a ON r.AnsweredBy = a.AdminID
-            JOIN User u ON r.UserReported = u.UserID
+            LEFT JOIN User_Admin a ON r.AnsweredBy = a.AdminID
+            LEFT JOIN User u ON r.UserReported = u.UserID
     '''
     cursor.execute(query)
     

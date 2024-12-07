@@ -4,8 +4,8 @@ import requests
 # Set the title of the page
 st.set_page_config(page_title="User Dashboard", layout="wide")
 
-back = st.sidebar.button("Back")
 st.title('📊 User Activity Dashboard')
+back = st.sidebar.button("Back")
 
 # Define a function to make API calls and get JSON responses
 def get_api_data(endpoint):
@@ -29,7 +29,7 @@ def display_data(category_name, data):
     elif category_name == "Alumni Statistics":
         getUser = "TotalAlumni"
     if category_name == "Advisor Statistics":
-        getUser = "TotalAdvisors"
+        getUser = "TotalAdvisor"
 
     if data:
         active_data = data.get('Active', {}).get(getUser, 0)

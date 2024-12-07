@@ -1,41 +1,90 @@
-import logging
-logger = logging.getLogger(__name__)
-import pandas as pd
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
-import world_bank_data as wb
-import matplotlib.pyplot as plt
-import numpy as np
-import plotly.express as px
-from modules.nav import SideBarLinks
+import requests
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+# Define the base URL for Flask API
 
-# set the header of the page
-st.header('World Bank Data')
+# Title
+st.title('Report Management System')
+back = st.sidebar.button("Back")
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+# Sidebar options
+menu_options = ["View Report Details", "Update Report", "Delete Report"]
+choice = st.sidebar.radio("Actions", menu_options)
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+# Function to display a list of existing reports
+def display_reports():
+    try:
+        response = requests.get("http://api:4000/r/reports")
+        if response.status_code == 200:
+            reports = response.json()
+            if reports:
+                st.dataframe(reports, use_container_width=True)
+            else:
+                st.write("No reports found.")
+        else:
+            st.write(f"Failed to fetch reports. Status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        st.write(f"API Error: {str(e)}")
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
-
-    st.pyplot(test_plot)
+def view_report():
+    st.switch_page('pages/Reports_Details_Page.py')
 
 
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+def update_report():
+    st.sidebar.write("### Update Existing Report")
+    report_id = st.sidebar.number_input('Enter Report ID to Update', min_value=1, step=1)
+    answered_by = st.sidebar.text_input('Answered By')
+    status_options = ["Resolved", "Pending"]
+    new_status = st.sidebar.selectbox('Update Status', status_options)
+    submitted = st.sidebar.button("Update")
+
+    if submitted:
+        if report_id and answered_by and new_status:
+            updated_data = {
+                "AnsweredBy": answered_by,
+                "Status": new_status
+            }
+            try:
+                response = requests.put(f"http://api:4000/r/reports/{report_id}", json=updated_data)
+
+                if response.status_code == 200:
+                    st.sidebar.success("Report successfully updated.")
+                else:
+                    st.sidebar.warning(f"Failed to update report. Status code: {response.status_code}")
+
+            except requests.exceptions.RequestException as e:
+                st.sidebar.warning(f"API Error: {str(e)}")
+        else: 
+            st.sidebar.warning("Please fill out all fields.")
+
+def delete_report(): 
+    st.sidebar.write("### Delete Existing Report")
+    report_id = st.sidebar.number_input("Enter Report ID", min_value=1, step=1)
+    submitted = st.sidebar.button("Update")
+
+    if submitted:
+        if report_id:
+            try:
+                response = requests.delete(f"http://api:4000/r/reports/{report_id}")
+                if response.status_code == 200:
+                    st.sidebar.success("Report successfully deleted!")
+                else:
+                    st.sidebar.error(f"Failed to delete report: {response.status_code}")
+            except requests.exceptions.RequestException as e:
+                    st.sidebar.warning(f"API Error: {str(e)}")
+        else:
+            st.sidebar.warning("Please fill out all fields.")
+
+# Show Sidebar Forms Based on Selection
+if choice == "View Report Details":
+    view_report()
+elif choice == "Update Report":
+    update_report()
+elif choice == "Delete Report":
+    delete_report()
+
+if back:
+    st.switch_page('pages/2_System_Administrator_Home.py')
+
+# Main Page - Display Users
+display_reports()
