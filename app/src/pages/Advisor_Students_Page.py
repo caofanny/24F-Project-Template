@@ -57,10 +57,12 @@ with header_cols[6]:
 
 #getting the student's that are in that advisors assigned students
 assigned_students = list()
+assigned_ids = list()
 
 for s in students: 
     if s['AdvisorID'] == 1:
         assigned_students.append(s)
+    
 
 
 
@@ -79,8 +81,17 @@ for student in assigned_students:
         st.write(student['CoopStatus'])
     with row_cols[5]:
         view_courses_button = st.button(f"View {student['FirstName']} {student['LastName']}'s courses")
-    #with row_cols[6]:
-    #    st.write(student['StudentID'])
+        #call the method that gets the courses for a student 
+        if view_courses_button:
+            #saving student information for use in other page
+            st.session_state["student_id"] = student['StudentID']
+            st.session_state["student_first_name"] = student['FirstName']
+            st.session_state["student_last_name"] = student['LastName']
+            st.switch_page('pages/Advisor_Student_Courses_Page.py')
+    with row_cols[6]:
+        st.write(student['StudentID'])
+
+
 
 
 
