@@ -396,20 +396,25 @@ def get_students_coop():
 #Returns a list of courses a student took
 @users.route('/users/students/courses/<studentid>', methods=['GET'])
 def get_courses(studentid):
-    
     cursor = db.getdb().cursor()
+    
+    # The SQL query with placeholder for studentid
     query = '''
     SELECT Courses.CoursesID, Courses.Name, Courses.Professor, Courses.Description
-        FROM User JOIN Student ON
-        User.UserID = Student.UserID
-            JOIN Courses_Taken ON
-             Student.UserID = Courses_Taken.UserID
-            JOIN Courses ON
-            Courses_Taken.CoursesID = Courses.CoursesID
-            WHERE Student.StudentID = %s;'''
+    FROM User
+    JOIN Student ON User.UserID = Student.UserID
+    JOIN Courses_Taken ON Student.UserID = Courses_Taken.UserID
+    JOIN Courses ON Courses_Taken.CoursesID = Courses.CoursesID
+    WHERE Student.StudentID = %s;
+    '''
     
+    # Execute the query, passing studentid as the parameter
     cursor.execute(query, (studentid,))
+    
+    # Fetch all results
     theData = cursor.fetchall()
+    
+    # Create the response
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response

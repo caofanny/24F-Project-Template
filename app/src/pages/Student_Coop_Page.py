@@ -58,17 +58,17 @@ for s in assigned_students:
 df_found_coops = pd.DataFrame(with_coops)
 
 #removing unnecssary columns
-df_found_coops.drop('AdvisorID', axis=1, inplace=True)
+#df_found_coops.drop('AdvisorID', axis=1, inplace=True)
 
 df_without_coops = pd.DataFrame(without_coops)
 
 #removing unnecssary columns
-df_without_coops.drop('AdvisorID', axis=1, inplace=True)
+#df_without_coops.drop('AdvisorID', axis=1, inplace=True)
 
 #making df
 df_not_searching = pd.DataFrame(not_searching)
 #removing unnecssary columns
-df_not_searching.drop('AdvisorID', axis=1, inplace=True)
+#df_not_searching.drop('AdvisorID', axis=1, inplace=True)
 
 
 # Making tables 

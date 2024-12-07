@@ -25,7 +25,8 @@ st.write(f"### These are the courses that {st.session_state['student_first_name'
 
 #fetching the needed data
 try:
-    response = requests.get(f'{BASE_URL}/students/courses/{st.session_state["student_id"]}')
+    #response = requests.get(f'{BASE_URL}/students/courses/{st.session_state["student_id"]}')
+    response = requests.get(f'{BASE_URL}/students/courses/2')
     response.raise_for_status()  # Raise an error for bad HTTP status
     st.write(f"Response Status: {response.status_code}")
     st.write(f"Response Data: {response.text}")
