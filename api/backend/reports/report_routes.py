@@ -19,7 +19,7 @@ def get_reports():
 
     cursor = db.get_db().cursor()
     query = '''
-        SELECT u.FirstName AS UserReported, a.FirstName AS AnsweredBy, 
+        SELECT r.ReportID, u.FirstName AS UserReported, a.FirstName AS AnsweredBy, 
                r.Reason, r.Status, r.ReportDate
         FROM Reports r
             LEFT JOIN User_Admin a ON r.AnsweredBy = a.AdminID
@@ -55,21 +55,21 @@ def make_report():
     return 'report created!'
 
 #------------------------------------------------------------
-# Return the specific report
-@reports.route('/reports/<report_id>', methods=['GET'])
-def get_specific_report(report_id):
+# Return the specific status report 
+@reports.route('/reports/<stats>', methods=['GET'])
+def get_specific_status(stats):
 
     cursor = db.get_db().cursor()
     
     # Query to fetch the specific report by report_id
     query = '''
-        SELECT u.FirstName AS UserReported, a.FirstName AS AnsweredBy, r.Reason, r.Status, r.ReportDate
+        SELECT r.ReportID, u.FirstName AS UserReported, a.FirstName AS AnsweredBy, r.Reason, r.Status, r.ReportDate
         FROM Reports r
         JOIN User_Admin a ON r.AnsweredBy = a.AdminID
         JOIN User u ON r.UserReported = u.UserID
-        WHERE r.ReportID = %s;
+        WHERE r.Status = %s;
     '''
-    cursor.execute(query, report_id)
+    cursor.execute(query, stats)
     theData = cursor.fetchall()
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200

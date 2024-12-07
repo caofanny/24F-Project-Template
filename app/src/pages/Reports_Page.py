@@ -6,9 +6,10 @@ import requests
 # Title
 st.title('Report Management System')
 back = st.sidebar.button("Back")
+report_id = st.sidebar.button("View Report Details")
 
 # Sidebar options
-menu_options = ["View Report Details", "Update Report", "Delete Report"]
+menu_options = ["Update Report", "Delete Report"]
 choice = st.sidebar.radio("Actions", menu_options)
 
 # Function to display a list of existing reports
@@ -26,15 +27,11 @@ def display_reports():
     except requests.exceptions.RequestException as e:
         st.write(f"API Error: {str(e)}")
 
-def view_report():
-    st.switch_page('pages/Reports_Details_Page.py')
-
-
 def update_report():
     st.sidebar.write("### Update Existing Report")
     report_id = st.sidebar.number_input('Enter Report ID to Update', min_value=1, step=1)
     answered_by = st.sidebar.text_input('Answered By')
-    status_options = ["Resolved", "Pending"]
+    status_options = ["resolved", "pending"]
     new_status = st.sidebar.selectbox('Update Status', status_options)
     submitted = st.sidebar.button("Update")
 
@@ -76,15 +73,15 @@ def delete_report():
             st.sidebar.warning("Please fill out all fields.")
 
 # Show Sidebar Forms Based on Selection
-if choice == "View Report Details":
-    view_report()
-elif choice == "Update Report":
+if choice == "Update Report":
     update_report()
 elif choice == "Delete Report":
     delete_report()
 
 if back:
     st.switch_page('pages/2_System_Administrator_Home.py')
+if report_id:
+    st.switch_page('pages/Reports_Details_Page.py')
 
 # Main Page - Display Users
 display_reports()

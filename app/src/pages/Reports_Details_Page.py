@@ -1,22 +1,24 @@
 import streamlit as st
 import requests
 
-# Define the base URL for Flask API
-
 # Title
-st.title('Report Management System')
-back = st.sidebar.button("Back")
+st.title('View Report')
 
-def get_report():
-    st.write("### Report")
+# Ask the user to enter the Report ID
+status_options = ["resolved", "pending"]
+report_stat = st.selectbox('Select Status', status_options)
 
+# Submit Button
+if st.button('View Report'):
     try:
-        response = requests.get("http://api:4000/u/users")
-        if response.status_code == 200:
-            users_data = response.json()
+        # Fetch the report from the API
+        response = requests.get(f"http://api:4000/r/reports/{report_stat}")
 
-            if users_data:
-                st.dataframe(users_data, use_container_width=True)
+        if response.status_code == 200:
+            report_data = response.json()
+
+            if report_data:
+                st.dataframe(report_data, use_container_width=True)
             else:
                 st.write("No users found in the database.")
 
@@ -26,6 +28,7 @@ def get_report():
         st.write(f"API Error: {str(e)}")
 
 
+# Back Button to go back to the previous page
+back = st.sidebar.button("Back")
 if back:
-    st.switch_page('pages/2_System_Administrator_Home.py')
-
+    st.switch_page('pages/Reports_Page.py')
