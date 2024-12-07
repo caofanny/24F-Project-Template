@@ -39,7 +39,7 @@ def create_review_form():
     submitted = st.sidebar.button("Submit")
 
     if submitted:
-        if rating and author_id and usernamea and comment:
+        if rating and author_id and username and comment:
             new_review = {
                 "Name": username,
                 "AuthorID": author_id,
@@ -50,7 +50,7 @@ def create_review_form():
             try:
                 response = requests.post(f"http://api:4000/c/courses/review/", json=new_review)
 
-                if response.status_code == 201:  # Assuming 201 for successful creation
+                if response.status_code == 200:
                     st.sidebar.success("Review successfully added to the course.")
                 else:
                     st.sidebar.error(f"Failed to create review. Status code: {response.status_code}")
@@ -74,7 +74,7 @@ def update_review_form():
             updated_data = {
                 "Title": title,
                 "Rating": rating,
-                "Comment": comment
+                "Content": comment
             }
             try:
                 response = requests.put(f"http://api:4000/c/courses/review/{review_id}", json=updated_data)
