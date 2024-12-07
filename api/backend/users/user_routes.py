@@ -337,6 +337,16 @@ def get_alumni():
     return the_response
 #------------------------------------------------------------
 # get list of student connect with alumnus
+@users.route('/users/alumnus/<int:alumnus_id>/add-student', methods=['POST'])
+def add_mentor_student_connection(alumnus_id):
+    """
+    Add a student connection to the specified alumnus.
+    """
+    # Retrieve the JSON payload from the request
+    request_data = request.get_json()
+    student_id = request_data.get('StudentID')
+
+# get list of student connect with alumnus
 @users.route('/users/alumnus/<alumnus_id>/students', methods=['GET'])
 def get_connected_students(alumnus_id):
     cursor = db.get_db().cursor()
@@ -350,27 +360,34 @@ def get_connected_students(alumnus_id):
     students = cursor.fetchall()
     return make_response(jsonify(students), 200)
 
-@users.route('/u/users/alumnus/<mentor_id>/students', methods=['POST'])
-def add_student_connection(mentor_id):
-    """Add a student connection to the specified alumnus."""
-    # Your logic here, e.g., retrieving data from the request and updating the database.
+@users.route('/users/alumnus/<int:alumnus_id>/add-student', methods=['POST'])
+def add_mentor_student_connection(alumnus_id):
+    """
+    Add a student connection to the specified alumnus.
+    """
+    # Retrieve the JSON payload from the request
     request_data = request.get_json()
     student_id = request_data.get('StudentID')
-    
+
+    # Validate input
     if not student_id:
         return jsonify({"error": "StudentID is required"}), 400
-    
-    cursor = db.get_db().cursor()
+
+    # Insert the connection into the Alumni_Mentors table
     query = '''
         INSERT INTO Alumni_Mentors (StudentID, AlumnusID)
         VALUES (%s, %s)
     '''
     try:
-        cursor.execute(query, (student_id, mentor_id))
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (alumnus_id, student_id))
         db.get_db().commit()
-        return jsonify({"message": "Connection added successfully"}), 201
+        return jsonify({"message": f"Student {student_id} successfully connected to alumnus {alumnus_id}"}), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        # Handle exceptions (e.g., duplicate connections)
+        return jsonify({"error": f"Failed to add connection: {str(e)}"}), 500
+
+
 
 # Returns this alumn's data and experience
 @users.route('/users/alumni/major', methods=['GET'])
