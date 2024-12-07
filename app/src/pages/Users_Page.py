@@ -54,6 +54,7 @@ def create_user_form():
 
                 if response.status_code == 200:
                     st.sidebar.success("User successfully added to the database.")
+                    display_users()
                 else:
                     st.sidebar.warning(f"Failed to create user. Status code: {response.status_code}")
 
@@ -83,6 +84,7 @@ def update_user_form():
 
                 if response.status_code == 200:
                     st.sidebar.success("User successfully updated.")
+                    display_users()
                 else:
                     st.sidebar.warning(f"Failed to update user. Status code: {response.status_code}")
 
@@ -102,6 +104,7 @@ def delete_user_form():
                 response = requests.delete(f"http://api:4000/u/users/{user_id}")
                 if response.status_code == 200:
                     st.sidebar.success("User successfully deleted!")
+                    display_users()
                 else:
                     st.sidebar.error(f"Failed to delete user: {response.status_code}")
             except requests.exceptions.RequestException as e:
