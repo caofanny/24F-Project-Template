@@ -1,41 +1,102 @@
 import logging
-logger = logging.getLogger(__name__)
+import requests
 import pandas as pd
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
-import world_bank_data as wb
-import matplotlib.pyplot as plt
-import numpy as np
-import plotly.express as px
 from modules.nav import SideBarLinks
 
-# Call the SideBarLinks from the nav module in the modules directory
+# Logger setup
+logger = logging.getLogger(__name__)
+
+# Sidebar Links
 SideBarLinks()
 
-# set the header of the page
-st.header('World Bank Data')
+# Title
+st.title("Your Posts Dashboard")
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+# Hardcoded Alumnus ID for demonstration purposes
+alumnus_id = 233  # Replace with dynamic ID from session or login
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+# Base URL for API requests
+BASE_API_URL = "http://api:4000"  # Ensure this matches your Flask API URL
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
+# Function to fetch posts for the given alumnus
+def fetch_user_posts(alumnus_id):
+    """Fetch all posts made by the specified alumnus."""
+    try:
+        # Filter posts by author using the `AuthorID` from the API
+        response = requests.get(f"{BASE_API_URL}/p/posts")
+        if response.status_code == 200:
+            all_posts = response.json()
+            # Filter posts for the specific author ID
+            user_posts = [post for post in all_posts if post['AuthorID'] == alumnus_id]
+            return pd.DataFrame(user_posts) if user_posts else None
+        else:
+            st.error(f"Failed to fetch posts: {response.status_code}")
+            return None
+    except requests.exceptions.RequestException as e:
+        st.error(f"API Request failed: {str(e)}")
+        return None
 
-    st.pyplot(test_plot)
+# Function to create a new post
+def create_post_form():
+    st.sidebar.write("### Create a New Post")
+    title = st.sidebar.text_input("Post Title")
+    slug = st.sidebar.text_input("Post Slug")
+    content = st.sidebar.text_area("Post Content")
+    published_at = st.sidebar.text_input("Publish Date (YYYY-MM-DD HH:MM:SS)", "")
 
+    submitted = st.sidebar.button("Create Post")
 
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+    if submitted:
+        if title and slug and content:
+            new_post = {
+                "AuthorID": alumnus_id,
+                "Title": title,
+                "Slug": slug,
+                "Content": content,
+                "PublishedAt": published_at if published_at else None,
+            }
+            try:
+                response = requests.post(f"{BASE_API_URL}/p/posts", json=new_post)
+                if response.status_code == 201:
+                    st.sidebar.success("Post created successfully!")
+                else:
+                    st.sidebar.error(f"Failed to create post. Status code: {response.status_code}")
+            except requests.exceptions.RequestException as e:
+                st.sidebar.error(f"API Error: {str(e)}")
+        else:
+            st.sidebar.warning("Please fill out all fields.")
+
+# Function to delete a post
+def delete_post_form():
+    st.sidebar.write("### Delete a Post")
+    post_id = st.sidebar.number_input("Enter Post ID to Delete", min_value=1, step=1)
+
+    submitted = st.sidebar.button("Delete Post")
+
+    if submitted:
+        try:
+            response = requests.delete(f"{BASE_API_URL}/p/posts/{int(post_id)}")
+            if response.status_code == 200:
+                st.sidebar.success("Post deleted successfully!")
+            else:
+                st.sidebar.error(f"Failed to delete post. Status code: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            st.sidebar.error(f"API Error: {str(e)}")
+
+# Display User's Posts
+def display_user_posts():
+    st.write("### Your Posts")
+
+    # Fetch posts
+    posts_df = fetch_user_posts(alumnus_id)
+
+    if posts_df is not None and not posts_df.empty:
+        st.dataframe(posts_df, use_container_width=True)
+    else:
+        st.write("You have not made any posts yet.")
+
+# Main Display Logic
+create_post_form()  # Sidebar for creating a new post
+delete_post_form()  # Sidebar for deleting a post
+display_user_posts()  # Main content: Display all posts
