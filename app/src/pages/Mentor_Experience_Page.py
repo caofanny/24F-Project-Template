@@ -78,7 +78,69 @@ if user_data:
 else:
     st.write("No data available.")
 #filter by same major
+header_cols = st.columns([1, 1, 1, 1])  # Adjust column widths as needed
+with header_cols[0]:
+    st.write("**Name:**")
+with header_cols[1]:
+    st.write("**Email:**")
+with header_cols[2]:
+    st.write("**Current Company:**")
+with header_cols[3]:
+    st.write("**Current Position:**")
+
+# Iterate through the student data and display each student in a row with a delete button
+for user in other_alumn_data:
+    row_cols = st.columns([1, 1, 1, 1])  # Same column width for each row
+    
+    with row_cols[0]:
+        st.write(f"{user['FirstName']} {user['LastName']}")
+    with row_cols[1]:
+        st.write(f"{user['Email']}")
+    with row_cols[2]:
+        st.write(f"{user['CurrentPosition']}")
+    with row_cols[3]:
+        st.write(f"{user['CurrentCompany']}")
+       
+st.write("---")
+
+
+# header_cols = st.columns([1, 1, 1, 1, 1, 1, 1])  # Adjust column widths as needed
+# with header_cols[0]:
+#     st.write("**Name:**")
+# with header_cols[1]:
+#     st.write("**Email:**")
+# with header_cols[2]:
+#     st.write("**College:**")
+# with header_cols[3]:
+#     st.write("**Major:**")
+# with header_cols[4]:
+#     st.write("**Num Co-ops:**")
+# with header_cols[5]:
+#     st.write("**Current Company:**")
+# with header_cols[6]:
+#     st.write("**Current Position:**")
+
+# # Iterate through the student data and display each student in a row with a delete button
+# for user in other_alumn_data:
+#     row_cols = st.columns([1, 1, 1, 1, 1, 1, 1,])  # Same column width for each row
+    
+#     with row_cols[0]:
+#         st.write(f"{user['FirstName']} {user['LastName']}")
+#     with row_cols[1]:
+#         st.write(f"{user['Email']}")
+#     with row_cols[2]:
+#         st.write(f"{user['College']}")
+#     with row_cols[3]:
+#         st.write(f"{user['Major']}")
+#     with row_cols[4]:
+#         st.write(f"{user['Num_Coops']}")
+#     with row_cols[5]:
+#         st.write(f"{user['CurrentPosition']}")
+#     with row_cols[5]:
+#         st.write(f"{user['CurrentCompany']}")
+       
+# st.write("---")
 
 
 if back:
-    st.switch_page('pages/3_Mentor_Home.py')
+    st.switch_page('pages/Mentor_Page.py')

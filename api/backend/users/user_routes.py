@@ -323,6 +323,25 @@ def get_alumni_filter_major():
     the_response.status_code = 200
     return the_response
 
+# Returns this alumn's data and experience
+@users.route('/users/alumni/filter/job', methods=['GET'])
+def get_alumni_filter_job():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, CurrentCompany, CurrentPosition
+        FROM Alumnus
+        WHERE CurrentCompany = 'Acme Corporation'
+        AND UserID != 85;
+    '''
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+
 #------------------------------------------------------------
 # Return a list of all students who took the specific course
 @users.route('/users/students/<course_name>', methods=['GET'])
