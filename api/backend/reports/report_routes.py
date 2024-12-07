@@ -38,7 +38,7 @@ def get_reports():
 @reports.route('/reports', methods=['POST'])
 def make_report():
 
-    reported_by = request.json.get('ReportedBy')  # UserID of the person reporting
+    userReported = request.json.get('UserReported')  # UserID of the person reporting
     reason = request.json.get('Reason')          # Reason for the report
     status = "pending"
     report_date = datetime.now()                 # Date and time of the report (current time)
@@ -49,7 +49,7 @@ def make_report():
         INSERT INTO Reports (UserReported, AnsweredBy, Status, Reason, ReportDate)
         VALUES (%s, NULL, %s, %s, %s)
     '''
-    cursor.execute(query, (reported_by, status, reason, report_date))
+    cursor.execute(query, (userReported, status, reason, report_date))
     db.get_db().commit()
     
     return 'report created!'

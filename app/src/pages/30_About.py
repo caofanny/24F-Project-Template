@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Navigation Sidebar
 SideBarLinks()
-logout = st.sidebar.button("Logout", key="logout_button")
+#logout = st.sidebar.button("Logout", key="logout_button")
 
 # About Us Section
 st.write("# About Us")
@@ -28,7 +28,7 @@ st.write("# Make a Report")
 
 # Report Form
 with st.form("report_form"):
-    reported_by = st.text_input("Reported By (User ID):", help="Enter the User ID of the person reporting")
+    user_reported = st.text_input("User to Report (User ID):", help="Enter the User ID of the person you are reporting")
     reason = st.text_area("Reason for the Report:", help="Provide a detailed reason for the report")
 
     # Submit Button
@@ -36,10 +36,10 @@ with st.form("report_form"):
 
 # Handle form submission
 if submit_button:
-    if reported_by and reason:
+    if user_reported and reason:
         # Prepare payload
         payload = {
-            "ReportedBy": reported_by,
+            "UserReported": user_reported,
             "Reason": reason
         }
 
@@ -56,7 +56,3 @@ if submit_button:
     else:
         st.warning("Please fill out all fields before submitting the report.")
 
-if logout:
-    del st.session_state["role"]
-    del st.session_state["authenticated"]
-    st.switch_page("Home.py")
