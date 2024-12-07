@@ -11,8 +11,7 @@ import plotly.express as px
 from modules.nav import SideBarLinks
 
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+back = st.sidebar.button("Back")
 
 # set the header of the page
 st.header('Make a Report')
@@ -47,4 +46,5 @@ if submit_button:
     else:
         st.warning("Please fill out all fields before submitting the report.")
 
-
+if back:
+    st.switch_page('pages/4_Advisor_Home.py')

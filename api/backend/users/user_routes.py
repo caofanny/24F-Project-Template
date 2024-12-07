@@ -433,7 +433,7 @@ def get_students_coop():
 #Returns a list of courses a student took
 @users.route('/users/students/courses/<studentid>', methods=['GET'])
 def get_courses(studentid):
-    cursor = db.getdb().cursor()
+    cursor = db.get_db().cursor()
     
     # The SQL query with placeholder for studentid
     query = '''
