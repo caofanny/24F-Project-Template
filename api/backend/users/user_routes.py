@@ -372,6 +372,60 @@ def add_student_connection(mentor_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Returns this alumn's data and experience
+@users.route('/users/alumni/major', methods=['GET'])
+def get_alumni_major():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, College, Major, Num_Coops, CurrentCompany, CurrentPosition
+        FROM Alumnus
+        WHERE UserID = 85;
+    '''
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+# Returns this alumn's data and experience
+@users.route('/users/alumni/filter/major', methods=['GET'])
+def get_alumni_filter_major():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, CurrentCompany, CurrentPosition
+        FROM Alumnus
+        WHERE Major = 'Biology'
+        AND UserID != 85;
+    '''
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+# Returns this alumn's data and experience
+@users.route('/users/alumni/filter/job', methods=['GET'])
+def get_alumni_filter_job():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, CurrentCompany, CurrentPosition
+        FROM Alumnus
+        WHERE CurrentCompany = 'Acme Corporation'
+        AND UserID != 85;
+    '''
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+
 
 #------------------------------------------------------------
 # Return a list of all students who took the specific course
