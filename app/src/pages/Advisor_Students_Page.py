@@ -9,8 +9,7 @@ import plotly.express as px
 from modules.nav import SideBarLinks
 import requests
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+back = st.sidebar.button("Back", key = "back-button")
 
 # set the header of the page
 st.header('Your Assigned Students')
@@ -91,7 +90,8 @@ for student in assigned_students:
     with row_cols[6]:
         st.write(student['StudentID'])
 
-
+if back:
+    st.switch_page('pages/4_Advisor_Home.py')
 
 
 

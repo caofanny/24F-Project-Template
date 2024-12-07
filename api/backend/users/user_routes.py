@@ -337,6 +337,9 @@ def get_alumni():
     return the_response
 #------------------------------------------------------------
 # get list of student connect with alumnus
+
+
+# get list of student connect with alumnus
 @users.route('/users/alumnus/<alumnus_id>/students', methods=['GET'])
 def get_connected_students(alumnus_id):
     cursor = db.get_db().cursor()
@@ -350,27 +353,62 @@ def get_connected_students(alumnus_id):
     students = cursor.fetchall()
     return make_response(jsonify(students), 200)
 
-@users.route('/u/users/alumnus/<mentor_id>/students', methods=['POST'])
-def add_student_connection(mentor_id):
-    """Add a student connection to the specified alumnus."""
-    # Your logic here, e.g., retrieving data from the request and updating the database.
-    request_data = request.get_json()
-    student_id = request_data.get('StudentID')
-    
-    if not student_id:
-        return jsonify({"error": "StudentID is required"}), 400
-    
+
+
+
+# Returns this alumn's data and experience
+@users.route('/users/alumni/major', methods=['GET'])
+def get_alumni_major():
     cursor = db.get_db().cursor()
+
     query = '''
-        INSERT INTO Alumni_Mentors (StudentID, AlumnusID)
-        VALUES (%s, %s)
+        SELECT FirstName, LastName, Email, College, Major, Num_Coops, CurrentCompany, CurrentPosition
+        FROM Alumnus
+        WHERE UserID = 85;
     '''
-    try:
-        cursor.execute(query, (student_id, mentor_id))
-        db.get_db().commit()
-        return jsonify({"message": "Connection added successfully"}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+# Returns this alumn's data and experience
+@users.route('/users/alumni/filter/major', methods=['GET'])
+def get_alumni_filter_major():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, CurrentCompany, CurrentPosition
+        FROM Alumnus
+        WHERE Major = 'Biology'
+        AND UserID != 85;
+    '''
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+# Returns this alumn's data and experience
+@users.route('/users/alumni/filter/job', methods=['GET'])
+def get_alumni_filter_job():
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT FirstName, LastName, Email, CurrentCompany, CurrentPosition
+        FROM Alumnus
+        WHERE CurrentCompany = 'Acme Corporation'
+        AND UserID != 85;
+    '''
+
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
 
 
 #------------------------------------------------------------
@@ -433,7 +471,7 @@ def get_students_coop():
 #Returns a list of courses a student took
 @users.route('/users/students/courses/<studentid>', methods=['GET'])
 def get_courses(studentid):
-    cursor = db.getdb().cursor()
+    cursor = db.get_db().cursor()
     
     # The SQL query with placeholder for studentid
     query = '''

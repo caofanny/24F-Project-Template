@@ -11,48 +11,40 @@ import plotly.express as px
 from modules.nav import SideBarLinks
 
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+back = st.sidebar.button("Back")
 
 # set the header of the page
 st.header('Make a Report')
 
-st.write("We value our community guidelines greatly and if you feel like they were violated, please make a report:")
-
-BASE_URL = "http://api:4000/r/reports"  # Adjust the URL as needed
-
-#form that will get the input from the user
+# Report Form
 with st.form("report_form"):
-        user_reported = st.text_input("User Reported (UserID):", "")
-        report_reason = st.text_area("Reason for the Report:")
-        submit_button = st.form_submit_button("Submit Report")
+    user_reported = st.text_input("User to Report (User ID):", help="Enter the User ID of the person you are reporting")
+    reason = st.text_area("Reason for the Report:", help="Provide a detailed reason for the report")
 
+    # Submit Button
+    submit_button = st.form_submit_button("Submit Report")
 
-#uploading the new user into the database
+# Handle form submission
 if submit_button:
-    if user_reported and report_reason:
+    if user_reported and reason:
+        # Prepare payload
+        payload = {
+            "UserReported": user_reported,
+            "Reason": reason
+        }
+
+        # Send data to API
         try:
-            # Prepare the data payload
-            user_data = {
-                "UserReported": user_reported,
-                "Reason": report_reason,
-            }
-            # Send POST request
-            response = requests.post(BASE_URL, json=user_data)
-            if response.status_code == 200:
-                st.success("Report successfully submitted")
+            response = requests.post("http://api:4000/r/reports", json=payload)
+            
+            if response.status_code == 200:  # Assuming 201 means "Created"
+                st.success("Report successfully submitted!")
             else:
-                st.error(f"Failed to create report: {response.text}")
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+                st.error(f"Failed to submit the report. Status code: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            st.error(f"API Error: {str(e)}")
     else:
-        st.error("Please fill in all fields.")
-    
+        st.warning("Please fill out all fields before submitting the report.")
 
-
-    
-        
-
-
-
-
+if back:
+    st.switch_page('pages/4_Advisor_Home.py')

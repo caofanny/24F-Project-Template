@@ -19,12 +19,12 @@ if st.button('Your Posts',
              use_container_width=True):
   st.switch_page('pages/Posts_Page.py')
 
-if st.button('View Your Experiences', 
+if st.button('View Your Profile and Connections', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/Mentor_Experience_Page.py')
+  st.switch_page('pages/Mentor_Information_Page.py')
 
-if st.button("Connect with Students/View Students",
+if st.button("Review Courses",
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/Student_Page.py')
+  st.switch_page('pages/Review_Courses_Page.py')
