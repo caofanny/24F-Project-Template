@@ -36,7 +36,10 @@ There are currently 4 users on Uconnect, a student, an alumnus, an advisor, and 
 
 ## Student
 
--
+- A student can have access to their informations such as:
+  - viewing available alumni mentors
+  - viewing courses
+  - and also reporting errors or anything that violates the guideline
 
 ## Alumnus
 
