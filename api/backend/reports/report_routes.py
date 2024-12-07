@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -40,7 +40,7 @@ def make_report():
 
     reported_by = request.json.get('ReportedBy')  # UserID of the person reporting
     reason = request.json.get('Reason')          # Reason for the report
-    status = request.json.get('Status')          # Status of the report
+    status = "pending"
     report_date = datetime.now()                 # Date and time of the report (current time)
 
     # Insert the report into the Reports table
