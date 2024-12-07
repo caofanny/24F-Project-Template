@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 SideBarLinks()
 
 # Sets title
-st.title('Courses Page')
+st.title('Alumni Page')
 
 # Function to Display Courses on the Main Page
 def display_courses():
@@ -25,10 +25,10 @@ def display_courses():
       if courses_data:
         st.dataframe(courses_data)
       else:
-        st.write("No Courses found in the database")
+        st.write("No Alumni found in the database")
         
     else:
-      st.write(f"Failed to fetch courses. Status code: {response.status_code}")
+      st.write(f"Failed to fetch alumni. Status code: {response.status_code}")
   except requests.exceptions.RequestException as e:
     st.write(f"API Error: {str(e)}")
     
