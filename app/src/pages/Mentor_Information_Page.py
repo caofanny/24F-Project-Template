@@ -4,7 +4,7 @@ import requests
 # Set the title of the page
 st.set_page_config(page_title="User Dashboard", layout="wide")
 
-st.title('📊 My Experience Dashboard')
+st.title('📊 My Information Dashboard')
 back = st.sidebar.button("Back")
 
 # Define a function to make API calls and get JSON responses

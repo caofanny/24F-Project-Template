@@ -22,7 +22,7 @@ if st.button('Your Posts',
 if st.button('View Your Experiences', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/Mentor_Experience_Page.py')
+  st.switch_page('pages/Mentor_Information_Page.py')
 
 if st.button("Connect with Students/View Students",
              type='primary',
