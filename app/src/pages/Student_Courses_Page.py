@@ -12,13 +12,13 @@ logger = logging.getLogger(__name__)
 SideBarLinks()
 
 # Sets title
-st.title('Alumni Page')
+st.title('Courses Page')
 
 # Function to Display Courses on the Main Page
 def display_courses():
   
   try:
-    response  = requests.get('http://api:4000/u/user/alumni/')
+    response  = requests.get('http://api:4000/c/courses')
     if response.status_code == 200:
       courses_data = response.json()
       
