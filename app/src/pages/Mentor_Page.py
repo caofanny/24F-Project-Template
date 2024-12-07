@@ -13,24 +13,32 @@ from modules.nav import SideBarLinks
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
-# set the header of the page
-st.write(f"### Hi, {st.session_state['first_name']}. these are your current mentors:")
 
-## Backend API URL 
-BASE_URL = "" "http://api:4000/u/users"
+st.title("Alumni Dashboard")
 
+# Sidebar Menu
+back = st.sidebar.button("Back")
 
-#fetching the needed data, gets all of the students in the database
-try:
-    response = requests.get(f"{BASE_URL}/students")
-    response.raise_for_status()  # Raise an error for bad HTTP status
-    students = response.json()
-except requests.exceptions.RequestException as e:
-    st.write("**Important**: Could not connect to the API, so using dummy data.")
+# Function to Display Courses on the Main Page
+def display_courses():
+    st.write("### All Alumni")
+    try:
+        response = requests.get("http://api:4000/u/users/alumni")  # Assuming courses endpoint
+        if response.status_code == 200:
+            courses_data = response.json()
 
+            if courses_data:
+                st.dataframe(courses_data, use_container_width=True)
+            else:
+                st.write("No courses found in the database.")
 
-for s in students:
-    st.write(f"{s}")
+        else:
+            st.error(f"Failed to fetch courses. Status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"API Error: {str(e)}")
+
+# Main Page - Display Courses
+display_courses()
 
 
 

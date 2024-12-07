@@ -24,13 +24,8 @@ if st.button('View Courses',
              use_container_width=True):
   st.switch_page('pages/Student_Courses_Page.py')
 
-if st.button('View Profile',
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/Student_Profile_Page.py')
-
 if st.button('Make a Report',
              type='primary',
             use_container_width=True):
-   st.switch_page('pages/Make_Report')
+   st.switch_page('pages/Make_Report.py')
 
