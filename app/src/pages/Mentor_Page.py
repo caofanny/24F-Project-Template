@@ -16,24 +16,21 @@ SideBarLinks()
 
 st.title("Alumni Dashboard")
 
-# Sidebar Menu
-back = st.sidebar.button("Back")
-
 # Function to Display Courses on the Main Page
 def display_courses():
     st.write("### All Alumni")
     try:
         response = requests.get("http://api:4000/u/users/alumni")  # Assuming courses endpoint
         if response.status_code == 200:
-            courses_data = response.json()
+            data = response.json()
 
-            if courses_data:
-                st.dataframe(courses_data, use_container_width=True)
+            if data:
+                st.dataframe(data, use_container_width=True)
             else:
-                st.write("No courses found in the database.")
+                st.write("No alumni found in the database.")
 
         else:
-            st.error(f"Failed to fetch courses. Status code: {response.status_code}")
+            st.error(f"Failed to fetch alumni. Status code: {response.status_code}")
     except requests.exceptions.RequestException as e:
         st.error(f"API Error: {str(e)}")
 
