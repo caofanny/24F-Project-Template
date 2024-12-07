@@ -12,24 +12,25 @@ logger = logging.getLogger(__name__)
 SideBarLinks()
 
 # Sets title
-st.title('Courses Page')
+st.title('Course Page')
 
 # Function to Display Courses on the Main Page
 def display_courses():
-  
-  try:
-    response  = requests.get('http://api:4000/c/courses')
-    if response.status_code == 200:
-      courses_data = response.json()
-      
-      if courses_data:
-        st.dataframe(courses_data)
-      else:
-        st.write("No Alumni found in the database")
-        
-    else:
-      st.write(f"Failed to fetch alumni. Status code: {response.status_code}")
-  except requests.exceptions.RequestException as e:
-    st.write(f"API Error: {str(e)}")
-    
+    st.write("### All Courses")
+    try:
+        response = requests.get("http://api:4000/c/courses")  # Assuming courses endpoint
+        if response.status_code == 200:
+            courses_data = response.json()
+
+            if courses_data:
+                st.dataframe(courses_data, use_container_width=True)
+            else:
+                st.write("No courses found in the database.")
+
+        else:
+            st.error(f"Failed to fetch courses. Status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"API Error: {str(e)}")
+
+# Main Page - Display Courses
 display_courses()
