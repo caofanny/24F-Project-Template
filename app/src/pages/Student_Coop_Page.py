@@ -3,9 +3,7 @@ logger = logging.getLogger(__name__)
 import pandas as pd
 import streamlit as st
 from streamlit_extras.app_logo import add_logo
-import world_bank_data as wb
-import matplotlib.pyplot as plt
-import numpy as np
+import requests
 import plotly.express as px
 from modules.nav import SideBarLinks
 
@@ -13,29 +11,65 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 
 # set the header of the page
-st.header('World Bank Data')
+st.header('Current Coop Search Stats:')
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+#let's get the information we need for the coop search status 
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+## Backend API URL 
+BASE_URL = "" "http://api:4000/u/users"
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
+#fetching the needed data
+try:
+    response = requests.get(f"{BASE_URL}/advisor/students")
+    response.raise_for_status()  # Raise an error for bad HTTP status
+    students = response.json()
+except requests.exceptions.RequestException as e:
+    students = [
+        {"StudentID": 1, "FirstName": "John", "LastName": "Doe", "Email": "john.doe@example.com", "Major": "CS", "College": "Engineering", "CoopStatus": "Searching", "Year": 3, "AdvisorID": 1},
+        {"StudentID": 2, "FirstName": "Jane", "LastName": "Smith", "Email": "jane.smith@example.com", "Major": "Math", "College": "Sciences", "CoopStatus": "None", "Year": 2, "AdvisorID": 1},
+    ]  # Dummy data if the request fails
 
-    st.pyplot(test_plot)
 
 
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+#getting the student's that are in that advisors assigned students
+assigned_students = list()
+assigned_ids = list()
+
+for s in students: 
+    if s['AdvisorID'] == 1:
+        assigned_students.append(s)
+
+
+
+with_coops = list()
+without_coops = list()
+#now from those students let's get the ones with coops secured
+for s in assigned_students:
+    if s['CoopStatus'] == 'Found co-op':
+        with_coops.append(s)  
+    else:
+        without_coops.append(s)
+
+#now that we have the info make it into a datafram
+df_found_coops = pd.DataFrame(with_coops)
+df_without_coops = pd.DataFrame(without_coops)
+
+# Making tables 
+st.subheader("Students with Co-ops")
+if not df_found_coops.empty:
+    st.dataframe(df_found_coops)
+else:
+    st.write("No students have co-ops yet.")
+
+# Display tables for students who are still searching
+st.subheader("Students Still Searching for Co-ops")
+if not df_without_coops.empty:
+    st.dataframe(df_without_coops)
+else:
+    st.write("All assigned students have found co-ops.")
+
+
+
+
+
+
