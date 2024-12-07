@@ -57,7 +57,7 @@ if st.button("Act as Alex Kim, a Student",
     logger.info("Logging in as Student")
     st.switch_page('pages/1_Student_Home.py')
 
-if st.button('Act as Natalie Chen, a Mentor', 
+if st.button('Act as Elvera Vasyukhnov, a Mentor', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
