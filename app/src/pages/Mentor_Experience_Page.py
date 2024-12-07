@@ -23,32 +23,35 @@ def get_api_data(endpoint):
 # Function to display data in a neat card style
 def display_data(category_name, data):
     st.subheader(category_name)
-    getUser = "TotalUsers"
-    if category_name == "Student Statistics":
-        getUser = "TotalStudents"
-    elif category_name == "Alumni Statistics":
-        getUser = "TotalAlumni"
-    if category_name == "Advisor Statistics":
-        getUser = "TotalAdvisor"
+    header_cols = st.columns([1, 1, 1, 1])  # Adjust column widths as needed
+    with header_cols[0]:
+        st.write("**Name:**")
+    with header_cols[1]:
+        st.write("**Email:**")
+    with header_cols[2]:
+        st.write("**Current Company:**")
+    with header_cols[3]:
+        st.write("**Current Position:**")
 
-    if data:
-        active_data = data.get('Active', {}).get(getUser, 0)
-        inactive_data = data.get('Inactive', {}).get(getUser, 0)
-        percentage_active = data.get('Active', {}).get(getUser, 0)
-
-        col1, col2, col3 = st.columns(3)
-
-        col1.metric("Active Users", active_data)
-        col2.metric("Inactive Users", inactive_data)
-        col3.metric("Active Percentage", f"{percentage_active}%")
-    else:
-        st.write("No data available.")
+    # Iterate through the student data and display each student in a row with a delete button
+    for user in data:
+        row_cols = st.columns([1, 1, 1, 1])  # Same column width for each row
+        
+        with row_cols[0]:
+            st.write(f"{user['FirstName']} {user['LastName']}")
+        with row_cols[1]:
+            st.write(f"{user['Email']}")
+        with row_cols[2]:
+            st.write(f"{user['CurrentPosition']}")
+        with row_cols[3]:
+            st.write(f"{user['CurrentCompany']}")
+          
+    st.write("---")
 
 # Get data for all statistics
 user_data = get_api_data('/users/alumni/major')
-other_alumn_data = get_api_data('/users/alumni/filter/major')
-alumni_data = get_api_data('/users/alumni-status')
-advisor_data = get_api_data('/users/advisors-status')
+alumni_filter_major = get_api_data('/users/alumni/filter/major')
+alumni_filter_job = get_api_data('/users/alumni/filter/job')
 
 st.write("---")
 if user_data:
@@ -78,69 +81,10 @@ if user_data:
 else:
     st.write("No data available.")
 #filter by same major
-header_cols = st.columns([1, 1, 1, 1])  # Adjust column widths as needed
-with header_cols[0]:
-    st.write("**Name:**")
-with header_cols[1]:
-    st.write("**Email:**")
-with header_cols[2]:
-    st.write("**Current Company:**")
-with header_cols[3]:
-    st.write("**Current Position:**")
+display_data("Alumni with the same major", alumni_filter_major)
 
-# Iterate through the student data and display each student in a row with a delete button
-for user in other_alumn_data:
-    row_cols = st.columns([1, 1, 1, 1])  # Same column width for each row
-    
-    with row_cols[0]:
-        st.write(f"{user['FirstName']} {user['LastName']}")
-    with row_cols[1]:
-        st.write(f"{user['Email']}")
-    with row_cols[2]:
-        st.write(f"{user['CurrentPosition']}")
-    with row_cols[3]:
-        st.write(f"{user['CurrentCompany']}")
-       
-st.write("---")
-
-
-# header_cols = st.columns([1, 1, 1, 1, 1, 1, 1])  # Adjust column widths as needed
-# with header_cols[0]:
-#     st.write("**Name:**")
-# with header_cols[1]:
-#     st.write("**Email:**")
-# with header_cols[2]:
-#     st.write("**College:**")
-# with header_cols[3]:
-#     st.write("**Major:**")
-# with header_cols[4]:
-#     st.write("**Num Co-ops:**")
-# with header_cols[5]:
-#     st.write("**Current Company:**")
-# with header_cols[6]:
-#     st.write("**Current Position:**")
-
-# # Iterate through the student data and display each student in a row with a delete button
-# for user in other_alumn_data:
-#     row_cols = st.columns([1, 1, 1, 1, 1, 1, 1,])  # Same column width for each row
-    
-#     with row_cols[0]:
-#         st.write(f"{user['FirstName']} {user['LastName']}")
-#     with row_cols[1]:
-#         st.write(f"{user['Email']}")
-#     with row_cols[2]:
-#         st.write(f"{user['College']}")
-#     with row_cols[3]:
-#         st.write(f"{user['Major']}")
-#     with row_cols[4]:
-#         st.write(f"{user['Num_Coops']}")
-#     with row_cols[5]:
-#         st.write(f"{user['CurrentPosition']}")
-#     with row_cols[5]:
-#         st.write(f"{user['CurrentCompany']}")
-       
-# st.write("---")
-
+#filter by same job
+display_data("Alumni at the same company", alumni_filter_job)
 
 if back:
-    st.switch_page('pages/Mentor_Page.py')
+    st.switch_page('pages/3_Mentor_Home.py')
