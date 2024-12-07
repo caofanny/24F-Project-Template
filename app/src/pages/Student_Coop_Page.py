@@ -51,7 +51,7 @@ for s in assigned_students:
         with_coops.append(s)  
     if s['CoopStatus'] == 'Searching':
         without_coops.append(s)
-    else:
+    if s['CoopStatus'] == 'Not Searching':
         not_searching.append(s)
 
 #now that we have the info make it into a datafram
