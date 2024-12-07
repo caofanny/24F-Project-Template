@@ -14,7 +14,7 @@ courses = Blueprint('courses', __name__)
 
 #------------------------------------------------------------
 # Return a list of courses
-@courses.route('/course', methods=['GET'])
+@courses.route('/courses', methods=['GET'])
 def get_courses():
 
     cursor = db.get_db().cursor()
@@ -51,21 +51,20 @@ def get_courses_from_student():
     return the_response
 
 #------------------------------------------------------------
-# Return all reviews for a specific course
-@courses.route('/courses/<course_name>/review/', methods=['GET'])
-def get_course_reviews(course_name):
+# Return all reviews
+@courses.route('/courses/review/', methods=['GET'])
+def get_course_reviews():
 
     cursor = db.get_db().cursor()
     query = '''
-        SELECT r.Name AS Username, r.Title AS Review_Title, r.Rating, r.Content
+        SELECT r.Name AS Username, r.Title AS Review_Title, r.Rating, r.Content, c.Name, r.ReviewID
         FROM Reviews_Made rm 
             JOIN Review r ON rm.ReviewID = r.ReviewID 
             JOIN Courses c ON rm.CoursesID = c.CoursesID 
-        WHERE c.Name = %s
         ORDER BY r.Rating DESC;
 
     '''
-    cursor.execute(query, course_name)
+    cursor.execute(query)
     
     theData = cursor.fetchall()
     
@@ -75,11 +74,11 @@ def get_course_reviews(course_name):
 
 #------------------------------------------------------------
 # Add a new review for the specific course
-@courses.route('/courses/<course_name>/review/', methods=['POST'])
-def add_course_reviews(course_name):
+@courses.route('/courses/review/', methods=['POST'])
+def add_course_reviews():
 
     data = request.get_json()
-    name = data.get('name')
+    username = data.get('Name')
     author_id = data.get('AuthorID')
     title = data.get('Title')   
     rating = data.get('Rating')  
@@ -92,7 +91,7 @@ def add_course_reviews(course_name):
         VALUES (%s, %s, %s, %s, %s)
     '''
 
-    cursor.execute(review_query, (name, author_id, title, rating, content))
+    cursor.execute(review_query, (username, author_id, title, rating, content))
     db.get_db().commit()
     return 'review created!'
 

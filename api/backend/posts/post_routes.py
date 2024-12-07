@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -41,7 +42,7 @@ def make_post():
     title = data.get('Title')
     slug = data.get('Slug')
     content = data.get('Content')
-    published_at = data.get('PublishedAt')
+    published_at = datetime.now()
 
     cursor = db.get_db().cursor()
     query = '''
@@ -65,17 +66,16 @@ def answer_report(post_id):
     title = data.get('Title')
     slug = data.get('Slug')
     content = data.get('Content')
-    published_at = data.get('PublishedAt')
 
-    current_app.logger.info(f'Received data: title={title}, slug={slug}, content={content}, publishedat={published_at}')
+    current_app.logger.info(f'Received data: title={title}, slug={slug}, content={content}')
     
     query = '''
         UPDATE Post
-        SET Title = %s, Slug = %s, Content = %s, PublishedAt = %s, UpdatedAt = CURRENT_TIMESTAMP
+        SET Title = %s, Slug = %s, Content = %s
         WHERE PostID = %s
     '''
     cursor = db.get_db().cursor()
-    cursor.execute(query, (title, slug, content, published_at, post_id))
+    cursor.execute(query, (title, slug, content, post_id))
     db.get_db().commit()
 
     if cursor.rowcount > 0:
@@ -144,7 +144,7 @@ def create_comment(post_id):
     data = request.get_json()
     author_id = data.get('AuthorID')
     content = data.get('Content')
-    published_at = data.get('PublishedAt', None)
+    published_at = datetime.now()
 
     cursor = db.get_db().cursor()
     query = '''

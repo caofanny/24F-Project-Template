@@ -2,9 +2,9 @@ import streamlit as st
 import requests
 
 # Set the title of the page
-st.set_page_config(page_title="User Dashboard", layout="wide")
+st.set_page_config(page_title="Profile and Connections", layout="wide")
 
-st.title('📊 My Experience Dashboard')
+st.title('My Profile and Connections')
 back = st.sidebar.button("Back")
 
 # Define a function to make API calls and get JSON responses

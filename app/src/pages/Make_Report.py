@@ -11,10 +11,40 @@ import plotly.express as px
 from modules.nav import SideBarLinks
 
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+back = st.sidebar.button("Back")
 
 # set the header of the page
 st.header('Make a Report')
 
-st.write('Here are a couple of graphs and tables that visualize how Co-op search is going for your students!')
+# Report Form
+with st.form("report_form"):
+    user_reported = st.text_input("User to Report (User ID):", help="Enter the User ID of the person you are reporting")
+    reason = st.text_area("Reason for the Report:", help="Provide a detailed reason for the report")
+
+    # Submit Button
+    submit_button = st.form_submit_button("Submit Report")
+
+# Handle form submission
+if submit_button:
+    if user_reported and reason:
+        # Prepare payload
+        payload = {
+            "UserReported": user_reported,
+            "Reason": reason
+        }
+
+        # Send data to API
+        try:
+            response = requests.post("http://api:4000/r/reports", json=payload)
+            
+            if response.status_code == 200:  # Assuming 201 means "Created"
+                st.success("Report successfully submitted!")
+            else:
+                st.error(f"Failed to submit the report. Status code: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            st.error(f"API Error: {str(e)}")
+    else:
+        st.warning("Please fill out all fields before submitting the report.")
+
+if back:
+    st.switch_page('pages/4_Advisor_Home.py')

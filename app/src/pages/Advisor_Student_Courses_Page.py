@@ -6,12 +6,10 @@ from streamlit_extras.app_logo import add_logo
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
-from modules.nav import SideBarLinks
 import requests
 
 
-# Call the SideBarLinks from the nav module in the modules directory
-SideBarLinks()
+back = st.sidebar.button("Back")
 
 # set the header of the page
 st.header('Here are the Student Courses For:')
@@ -21,54 +19,53 @@ BASE_URL = "http://api:4000/u/users"
 
 #getting the data for the courses a specific student is taking 
 
-st.write(f"### These are the courses that {st.session_state['student_first_name']} is taking currently:")
+st.write(f"### These are the courses that the student is taking currently:")
 
 #fetching the needed data
 try:
     #response = requests.get(f'{BASE_URL}/students/courses/{st.session_state["student_id"]}')
     response = requests.get(f'{BASE_URL}/students/courses/2')
-    response.raise_for_status()  # Raise an error for bad HTTP status
-    st.write(f"Response Status: {response.status_code}")
-    st.write(f"Response Data: {response.text}")
-    courses = response.json()
+    if response.status_code == 200:
+        courses = response.json()
+    else:
+            st.write(f"Failed to fetch courses. Status code: {response.status_code}")
 except requests.exceptions.RequestException as e:
       # Dummy data if the request fails
     courses = [
         {"CoursesID": 1, 'Name': "Algorithms and Data", "Professor": "Andrew Van der Poel", "Description": "Fundamentals of algorithm design." },
-        {"CoursesID": 3, 'Name': "OOD", "Professor": "Mark Fontenot", "Description": "OOD Principlles." }
+        {"CoursesID": 3, 'Name': "OOD", "Professor": "Mark Fontenot", "Description": "OOD Principles." }
 
     ]
 
 
 st.write("Courses:")
 
-# displaying headers
-# Display headers above the data table
-header_cols = st.columns([1, 1, 1, 1])  # Adjust column widths as needed
+header_cols = st.columns([1, 2, 2, 3])  # Adjust column widths
 with header_cols[0]:
     st.write("**Course ID**")
 with header_cols[1]:
     st.write("**Course Name**")
 with header_cols[2]:
-    st.write("**Proffessor**")
+    st.write("**Professor**")
 with header_cols[3]:
-    st.write("**Course Description**")
+    st.write("**Description**")
 
 
 
-#displaying the course info
+# Display each course
 for course in courses:
-    row_cols = st.columns([1, 1, 1, 1, 1, 1, 1])
+    row_cols = st.columns([1, 2, 2, 3])
     with row_cols[0]:
-        st.write(course['CoursesID'])
+        st.write(course.get('CoursesID', 'N/A'))
     with row_cols[1]:
-        st.write(course['Name'])
+        st.write(course.get('Name', 'N/A'))
     with row_cols[2]:
-        st.write(course['Professor'])
+        st.write(course.get('Professor', 'N/A'))
     with row_cols[3]:
-        st.write(course['Description'])
+        st.write(course.get('Description', 'N/A'))
 
-
+if back:
+    st.switch_page('pages/Advisor_Students_Page.py')
 
 
 
