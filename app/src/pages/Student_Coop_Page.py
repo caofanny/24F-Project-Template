@@ -52,17 +52,25 @@ for s in assigned_students:
 
 #now that we have the info make it into a datafram
 df_found_coops = pd.DataFrame(with_coops)
+
+#removing unnecssary columns
+df_found_coops.drop('AdvisorID', axis=1, inplace=True)
+
 df_without_coops = pd.DataFrame(without_coops)
 
+#removing unnecssary columns
+df_without_coops.drop('AdvisorID', axis=1, inplace=True)
+
+
 # Making tables 
-st.subheader("Students with Co-ops")
+st.subheader("Students with Co-ops :partying_face:")
 if not df_found_coops.empty:
     st.dataframe(df_found_coops)
 else:
     st.write("No students have co-ops yet.")
 
 # Display tables for students who are still searching
-st.subheader("Students Still Searching for Co-ops")
+st.subheader("Students Still Searching for Co-ops :mag_right:")
 if not df_without_coops.empty:
     st.dataframe(df_without_coops)
 else:
