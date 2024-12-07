@@ -3,12 +3,12 @@
 - https://drive.google.com/file/d/1ghYJkm4rAB-ELgSBYD5wMHzwxi2A8Ac1/view?usp=drive_link 
 ## env file setup
 
-SECRET_KEY=<somepassword>
-DB_USER=root
-DB_HOST=db
-DB_PORT=3306
-DB_NAME=uconnect
-MYSQL_ROOT_PASSWORD=<somepassword>
+- SECRET_KEY=<somepassword>
+- DB_USER=root
+- DB_HOST=db
+- DB_PORT=3306
+- DB_NAME=uconnect
+- MYSQL_ROOT_PASSWORD=<somepassword>
 
 ## Running the Project
 
