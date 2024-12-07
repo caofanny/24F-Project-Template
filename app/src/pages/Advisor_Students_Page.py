@@ -37,13 +37,22 @@ st.write("These are your assigned students:")
 
 
 # Display headers above the data table
-header_cols = st.columns([1, 1, 1])  # Adjust column widths as needed
+header_cols = st.columns([1, 1, 1, 1, 1, 1, 1])  # Adjust column widths as needed
 with header_cols[0]:
-    st.write("FirstName")
+    st.write("**FirstName**")
 with header_cols[1]:
-    st.write("LastName")
+    st.write("**LastName**")
 with header_cols[2]:
-    st.write("Email")
+    st.write("**Email**")
+with header_cols[3]:
+    st.write("**Year**")
+with header_cols[4]:
+    st.write ("**CoopStatus**")
+with header_cols[5]:
+    st.write("**Courses**")
+with header_cols[6]:
+    st.write("**StudentID**")
+
 
 
 #getting the student's that are in that advisors assigned students
@@ -57,13 +66,25 @@ for s in students:
 
 # displaying the student info
 for student in assigned_students:
-    row_cols = st.columns([1, 1, 1,])
+    row_cols = st.columns([1, 1, 1, 1, 1, 1, 1])
     with row_cols[0]:
         st.write(student['FirstName'])
     with row_cols[1]:
         st.write(student['LastName'])
     with row_cols[2]:
         st.write(student['Email'])
+    with row_cols[3]:
+        st.write(student['Year'])
+    with row_cols[4]:
+        st.write(student['CoopStatus'])
+    with row_cols[5]:
+        view_courses_button = st.button(f"View {student['FirstName']} {student['LastName']}'s courses")
+    #with row_cols[6]:
+    #    st.write(student['StudentID'])
+
+
+
+
 
 
 

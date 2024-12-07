@@ -376,7 +376,7 @@ def get_students_coop():
     cursor = db.get_db().cursor()
 
     query = '''
-        SELECT FirstName, LastName, Email, Major, Year, CoopStatus, AdvisorID
+        SELECT FirstName, LastName, Email, Major, Year, CoopStatus, AdvisorID, StudentID
         FROM Student;
     '''
     cursor.execute(query)
@@ -384,6 +384,30 @@ def get_students_coop():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
+
+#--------------------------------------------------------------
+#Returns a list of courses a student took
+@users.route('/users/students/courses/<studentid>', methods=['GET'])
+def get_students_courses():
+    
+    cursor = db.getdb().cursor()
+    query = '''
+    SELECT Courses.CoursesID, Courses.Name, Courses.Professor, Courses.Description
+        FROM User JOIN Student ON
+        User.UserID = Student.UserID
+            JOIN Courses_Taken ON
+             Student.UserID = Courses_Taken.UserID
+            JOIN Courses ON
+            Courses_Taken.CoursesID = Courses.CoursesID
+            WHERE studentID = %s;'''
+    
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+
 
 #------------------------------------------------------------
 # Returns the coop placement rate for students
