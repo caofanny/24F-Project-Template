@@ -25,15 +25,16 @@ BASE_URL = "" "http://api:4000/u/users"
 try:
     response = requests.get(f"{BASE_URL}/advisor/students")
     response.raise_for_status()  # Raise an error for bad HTTP status
-    assigned_students = response.json()
+    students = response.json()
 except requests.exceptions.RequestException as e:
     st.write("**Important**: Could not connect to the API, so using dummy data.")
-    assigned_students = [
-        {"StudentID": 1, "FirstName": "John", "LastName": "Doe", "Email": "john.doe@example.com", "Major": "CS", "College": "Engineering", "CoopStatus": "Searching", "Year": 3},
-        {"StudentID": 2, "FirstName": "Jane", "LastName": "Smith", "Email": "jane.smith@example.com", "Major": "Math", "College": "Sciences", "CoopStatus": "None", "Year": 2},
+    students = [
+        {"StudentID": 1, "FirstName": "John", "LastName": "Doe", "Email": "john.doe@example.com", "Major": "CS", "College": "Engineering", "CoopStatus": "Searching", "Year": 3, "AdvisorID": 1},
+        {"StudentID": 2, "FirstName": "Jane", "LastName": "Smith", "Email": "jane.smith@example.com", "Major": "Math", "College": "Sciences", "CoopStatus": "None", "Year": 2, "AdvisorID": 1},
     ]  # Dummy data if the request fails
 
 st.write("These are your assigned students:")
+
 
 # Display headers above the data table
 header_cols = st.columns([1, 1, 1])  # Adjust column widths as needed
@@ -45,6 +46,15 @@ with header_cols[2]:
     st.write("Email")
 
 
+#getting the student's that are in that advisors assigned students
+assigned_students = list()
+
+for s in students: 
+    if s['AdvisorID'] == 1:
+        assigned_students.append(s)
+
+
+
 # displaying the student info
 for student in assigned_students:
     row_cols = st.columns([1, 1, 1,])
@@ -54,6 +64,8 @@ for student in assigned_students:
         st.write(student['LastName'])
     with row_cols[2]:
         st.write(student['Email'])
+
+
 
     
 
