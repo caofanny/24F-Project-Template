@@ -9,6 +9,7 @@ import plotly.express as px
 from modules.nav import SideBarLinks
 import requests
 
+
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
