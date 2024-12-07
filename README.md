@@ -1,6 +1,6 @@
 # UConnect Project Repository
 # demo video
-- https://drive.google.com/file/d/1wKy24YTIGBlPo1hynJ6PyZr_KhUubvE1/view?usp=sharing
+- https://drive.google.com/file/d/1wKy24YTIGBlPo1hynJ6PyZr_KhUubvE1/view 
 
 ## env file setup
 Choose a strong password and replace <somepassword>
